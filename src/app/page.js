@@ -3,20 +3,17 @@ import styles from "./page.module.css";
 
 //set title to "Home"
 export const metadata = {
-    title: "Home",
-    description: "Home"
-
+  title: "Home",
+  description: "Home",
 };
 
-
-const Characters = require('../Characters.json');
+const Characters = require("./characters.json");
 import { Character } from "../Character.js";
 
 export default function Home() {
   return (
     <main className={styles.main}>
-    <h1>Developed by Enspiron</h1>
-
+      <h1>Developed by Enspiron</h1>
     </main>
   );
 }
