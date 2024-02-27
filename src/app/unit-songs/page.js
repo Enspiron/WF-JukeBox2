@@ -291,76 +291,77 @@ const [filter, setFilter] = React.useState(() => charFiltering.Chars);
         <div>
           {/* This is the page of the clicked unit */}
           <Stack>
-          {/* Mobile layout */}
-          {!isDesktop && (
-            <Stack direction="column">
-              {/* Back button */}
-              <Button onClick={() => setClickedUnit(null)} fullWidth variant="outlined" style={{ marginTop: "15px" }}>
-                <Stack direction="row" justifyContent="center">
-                  Back
+        {/* Mobile layout */}
+        {!isDesktop && (
+          <Stack direction="column">
+            {/* Back button */}
+            <Button onClick={() => setClickedUnit(null)} fullWidth variant="outlined" style={{ marginTop: "15px" }}>
+              <Stack direction="row" justifyContent="center">
+                Back
+              </Stack>
+            </Button>
+
+            {/* Conditional content based on clickedUnit */}
+            {clickedUnit && (
+              <>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  {charFiltering.getEnName(clickedUnit).ENName}
+                  <img src={charFiltering.getCharArt(clickedUnit)} alt={clickedUnit} style={{ maxWidth: '100%', height: 'auto' }} />
+                </div>
+
+                <List>
+                  {charFiltering.songURL(clickedUnit).map((song) => (
+                    <ListItem>
+                      <ListItemButton onClick={() => { setSongURL(`https://github.com/Enspiron/WorldFlipperPlayer/raw/main/character_unique/${clickedUnit}/${song}`) }}>{song}</ListItemButton>
+                    </ListItem>
+                  ))}
+                </List>
+              </>
+            )}
+
+            {/* Audio player */}
+            <ThemeProvider theme={theme}>
+              <audio controls src={songURL} type="audio/mpeg" loop style={{ width: "100%" }} auto />
+            </ThemeProvider>
+          </Stack>
+        )}
+
+        {/* Desktop layout */}
+        <Button onClick={() => setClickedUnit(null)} fullWidth variant="outlined" style={{ marginTop: "15px" }}>
+          <Stack direction="row" justifyContent="center">
+            Back
+          </Stack>
+        </Button>
+        {isDesktop && (
+          <Stack direction="row" justifyContent="space-evenly">
+            {/* Back button */}
+
+            {/* Conditional content based on clickedUnit */}
+            {clickedUnit && (
+              <>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  {charFiltering.getEnName(clickedUnit).ENName}
+                  <img src={charFiltering.getCharArt(clickedUnit)} alt={clickedUnit} style={{ maxWidth: '100%', height: 'auto' }} />
+                </div>
+              <Stack direction="column" alignItems="stretch" justifyContent="space-evenly" width="20%">
+                <List>
+                  {charFiltering.songURL(clickedUnit).map((song) => (
+                    <ListItem>
+                      <ListItemButton onClick={() => { setSongURL(`https://github.com/Enspiron/WorldFlipperPlayer/raw/main/character_unique/${clickedUnit}/${song}`) }}>{song}</ListItemButton>
+                    </ListItem>
+                  ))}
+                </List>
+                {/* Audio player */}
+                <ThemeProvider theme={theme}>
+                  <audio controls src={songURL} type="audio/mpeg" loop style={{ width: "100%" }} auto />
+                </ThemeProvider>
                 </Stack>
-              </Button>
+              </>
+            )}
 
-              {/* Conditional content based on clickedUnit */}
-              {clickedUnit && (
-                <>
-                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {charFiltering.getEnName(clickedUnit).ENName}
-                    <img src={charFiltering.getCharArt(clickedUnit)} alt={clickedUnit} style={{ maxWidth: '100%', height: 'auto' }} />
-                  </div>
-
-                  <List>
-                    {charFiltering.songURL(clickedUnit).map((song) => (
-                      <ListItem>
-                        <ListItemButton onClick={() => { setSongURL(`https://github.com/Enspiron/WorldFlipperPlayer/raw/main/character_unique/${clickedUnit}/${song}`) }}>{song}</ListItemButton>
-                      </ListItem>
-                    ))}
-                  </List>
-                </>
-              )}
-
-              {/* Audio player */}
-              <ThemeProvider theme={theme}>
-                <audio controls src={songURL} type="audio/mpeg" loop style={{ width: "100%" }} auto />
-              </ThemeProvider>
-            </Stack>
-          )}
-
-          {/* Desktop layout */}
-          {isDesktop && (
-            <Stack direction="row">
-              {/* Back button */}
-              <Button onClick={() => setClickedUnit(null)} fullWidth variant="outlined" style={{ marginTop: "15px" }}>
-                <Stack direction="row" justifyContent="center">
-                  Back
-                </Stack>
-              </Button>
-
-              {/* Conditional content based on clickedUnit */}
-              {clickedUnit && (
-                <>
-                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {charFiltering.getEnName(clickedUnit).ENName}
-                    <img src={charFiltering.getCharArt(clickedUnit)} alt={clickedUnit} style={{ maxWidth: '100%', height: 'auto' }} />
-                  </div>
-
-                  <List>
-                    {charFiltering.songURL(clickedUnit).map((song) => (
-                      <ListItem>
-                        <ListItemButton onClick={() => { setSongURL(`https://github.com/Enspiron/WorldFlipperPlayer/raw/main/character_unique/${clickedUnit}/${song}`) }}>{song}</ListItemButton>
-                      </ListItem>
-                    ))}
-                  </List>
-                </>
-              )}
-
-              {/* Audio player */}
-              <ThemeProvider theme={theme}>
-                <audio controls src={songURL} type="audio/mpeg" loop style={{ width: "100%" }} auto />
-              </ThemeProvider>
-            </Stack>
-          )}
-        </Stack>
+          </Stack>
+        )}
+      </Stack>
           
         </div>}
 
