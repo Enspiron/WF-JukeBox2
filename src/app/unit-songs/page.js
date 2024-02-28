@@ -42,6 +42,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
+
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../theme";
 
@@ -80,9 +81,18 @@ import Three from "./rarity/star3.png";
 import Two from "./rarity/star2.png";
 import One from "./rarity/star1.png";
 
+import Character from "../../Character.js";
+
+
 import { Filter } from "@mui/icons-material";
 
+
+
+
 export default function Home() {
+
+  
+
   const charFiltering = new FilterChars();
   const [attributes, setAttributes] = React.useState(() => []);
   const [rarity, setRarity] = React.useState(() => []);
@@ -96,6 +106,9 @@ export default function Home() {
   const isDesktop = useMediaQuery("(min-width: 600px)");
 
   const [filter, setFilter] = React.useState(() => charFiltering.Chars);
+
+  const unit = new Character(clickedUnit)
+
 
   const handleFormat = (event, newFormats) => {
     setAttributes(newFormats);
@@ -163,6 +176,8 @@ export default function Home() {
       setFilter(charFiltering.Chars);
     }
   }, [term]);
+
+
 
   return (
     <div>
@@ -324,10 +339,10 @@ export default function Home() {
                 >
                   {filter.map((char) => {
                     return (
-                      <ToolTip title={char.ENName}>
+                      <ToolTip title={char.ENName} arrow size='lg'>
                         <Item
-                          style={{ cursor: "pointer", padding: "5px" }}
-                          onClick={() => setClickedUnit(char.DevNicknames)}
+                          style={{ cursor: "pointer", padding: "1px" }}
+                          onClick={() => {setClickedUnit(char.DevNicknames); unit.changeUnit(clickedUnit)}}
                         >
                           <img
                             src={charFiltering.getCharIcon(char.DevNicknames)}
@@ -391,15 +406,9 @@ export default function Home() {
                     </div>
 
                     <List>
-                      {charFiltering.songURL(clickedUnit).map((song) => (
+                      {unit.getSongs().map((song) => (
                         <ListItem>
-                          <ListItemButton
-                            onClick={() => {
-                              setSongURL(
-                                `https://github.com/Enspiron/WorldFlipperPlayer/raw/main/character_unique/${clickedUnit}/${song}`,
-                              );
-                            }}
-                          >
+                          <ListItemButton onClick={() => {setSongURL(unit.makeSongURL(song));}}>
                             {song}
                           </ListItemButton>
                         </ListItem>
@@ -463,15 +472,9 @@ export default function Home() {
                       <List>
                         {charFiltering.songURL(clickedUnit).map((song) => (
                           <ListItem>
-                            <ListItemButton
-                              onClick={() => {
-                                setSongURL(
-                                  `https://github.com/Enspiron/WorldFlipperPlayer/raw/main/character_unique/${clickedUnit}/${song}`,
-                                );
-                              }}
-                            >
-                              {song}
-                            </ListItemButton>
+                            <ListItemButton onClick={() => {setSongURL(unit.makeSongURL(song));}}>
+                            {song}
+                          </ListItemButton>
                           </ListItem>
                         ))}
                       </List>

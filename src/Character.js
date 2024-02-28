@@ -60,29 +60,96 @@
 
 const Characters = require('./characters.json');
 
-class Character {
-    constructor(DevNicknames) {
-        this.DevNicknames = DevNicknames;
-        this.va = Characters[DevNicknames].va;
-        this.attribute = Characters[DevNicknames].Attribute;
-        this.jpName = Characters[DevNicknames].JPName;
-        this.enName = Characters[DevNicknames].ENName;
-        this.role = Characters[DevNicknames].Role;
-        this.leaderBuff = Characters[DevNicknames].LeaderBuff;
-        this.skill = Characters[DevNicknames].Skill;
-        this.skillWait = Characters[DevNicknames].SkillWait;
-        this.ability1 = Characters[DevNicknames].Ability1;
-        this.ability2 = Characters[DevNicknames].Ability2;
-        this.ability3 = Characters[DevNicknames].Ability3;
-        this.ability4 = Characters[DevNicknames].Ability4;
-        this.ability5 = Characters[DevNicknames].Ability5;
-        this.ability6 = Characters[DevNicknames].Ability6;
-        this.stance = Characters[DevNicknames].Stance;
+export default class Character{
+    UnitKit = {
+        ManaBoard : {
+            ManaBoard1: {
+            "ability1": "",
+            "ability2": "",
+            "ability3": "",
+            },
+            ManaBoard2: {
+            "ability4": "",
+            "ability5": "",
+            "ability6": "",
+            }
+        },
+        "attribute": "",
+        "leaderBuff": "",
+        "role": "",
+        "skill": ""
     }
 
+    attribute = "";
+    
 
+    constructor(DevNicknames) {
+        console.log("Working")
+        Characters.chars.filter((char) => {
+            if (char.DevNicknames === DevNicknames) {
+                this.Unit = char;
+            }
+        })
 
+        if (this.Unit) {
+            this.enName = this.Unit.ENName;
+            this.attribute = this.Unit.Attribute;
+
+            this.UnitKit.ManaBoard.ManaBoard1.ability1 = this.Unit.Ability1;
+            this.UnitKit.ManaBoard.ManaBoard1.ability2 = this.Unit.Ability2;
+            this.UnitKit.ManaBoard.ManaBoard1.ability3 = this.Unit.Ability3;
+            this.UnitKit.ManaBoard.ManaBoard2.ability4 = this.Unit.Ability4;
+            this.UnitKit.ManaBoard.ManaBoard2.ability5 = this.Unit.Ability5;
+            this.UnitKit.ManaBoard.ManaBoard2.ability6 = this.Unit.Ability6;
+
+            this.UnitKit.attribute = this.Unit.Attribute;
+            this.UnitKit.leaderBuff = this.Unit.LeaderBuff;
+            this.UnitKit.role = this.Unit.Role;
+            this.UnitKit.skill = this.Unit.Skill;
+        } else {
+            console.log("Character not found: ", DevNicknames)
+        }
+
+        console.log("Initialized Character: ", this.enName, " with attribute: ", this.attribute)
+    }
+
+    changeUnit(DevNicknames) {
+        Characters.chars.filter((char) => {
+            if (char.DevNicknames === DevNicknames) {
+                this.Unit = char;
+            }
+        })
+
+        if (this.Unit) {
+            this.enName = this.Unit.ENName;
+            this.attribute = this.Unit.Attribute;
+
+            this.UnitKit.ManaBoard.ManaBoard1.ability1 = this.Unit.Ability1;
+            this.UnitKit.ManaBoard.ManaBoard1.ability2 = this.Unit.Ability2;
+            this.UnitKit.ManaBoard.ManaBoard1.ability3 = this.Unit.Ability3;
+            this.UnitKit.ManaBoard.ManaBoard2.ability4 = this.Unit.Ability4;
+            this.UnitKit.ManaBoard.ManaBoard2.ability5 = this.Unit.Ability5;
+            this.UnitKit.ManaBoard.ManaBoard2.ability6 = this.Unit.Ability6;
+
+            this.UnitKit.attribute = this.Unit.Attribute;
+            this.UnitKit.leaderBuff = this.Unit.LeaderBuff;
+            this.UnitKit.role = this.Unit.Role;
+            this.UnitKit.skill = this.Unit.Skill;
+        } else {
+            console.log("Character not found: ", DevNicknames)
+        }
+
+        console.log("Changed Character: ", this.enName, " with attribute: ", this.attribute)
+
+    }
+     
+    makeSongURL(song) {
+        return `https://github.com/Enspiron/WorldFlipperPlayer/raw/main/character_unique/${this.Unit.DevNicknames}/${song}`
+    }
+
+    getSongs() {  
+        return this.Unit.songs;
+    }
 
 }
 
-module.exports = Character;
