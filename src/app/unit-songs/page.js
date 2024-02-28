@@ -152,11 +152,11 @@ export default function Home() {
     if (rarity.length === 0) {
       setFilter(
         charFiltering.setFilterByRarity([
-          "Five",
-          "Four",
-          "Three",
-          "Two",
-          "One",
+          "5",
+          "4",
+          "3",
+          "2",
+          "1",
         ]),
       );
     }
@@ -252,7 +252,7 @@ export default function Home() {
                   value={rarity}
                   onChange={handleRarity}
                 >
-                  <ToggleButton value="Five">
+                  <ToggleButton value="5">
                     <Image
                       src={Five}
                       alt="Five"
@@ -260,7 +260,7 @@ export default function Home() {
                       height="auto"
                     />
                   </ToggleButton>
-                  <ToggleButton value="Four">
+                  <ToggleButton value="4">
                     <Image
                       src={Four}
                       alt="Four"
@@ -268,7 +268,7 @@ export default function Home() {
                       height="auto"
                     />
                   </ToggleButton>
-                  <ToggleButton value="Three">
+                  <ToggleButton value="3">
                     <Image
                       src={Three}
                       alt="Three"
@@ -276,7 +276,7 @@ export default function Home() {
                       height="auto"
                     />
                   </ToggleButton>
-                  <ToggleButton value="Two">
+                  <ToggleButton value="2">
                     <Image
                       src={Two}
                       alt="Two"
@@ -284,7 +284,7 @@ export default function Home() {
                       height="auto"
                     />
                   </ToggleButton>
-                  <ToggleButton value="One">
+                  <ToggleButton value="1">
                     <Image
                       src={One}
                       alt="One"
@@ -300,6 +300,7 @@ export default function Home() {
                   setAttributes([]);
                   setRarity([]);
                   setTerm("");
+                  setFilter(charFiltering.resetFilter());
                 }}
                 fullWidth={isDesktop ? false : true}
                 variant="outlined"
@@ -308,11 +309,6 @@ export default function Home() {
                 Reset Filter
               </Button>
             </Stack>
-            <div>
-              {attributes.map((format) => {
-                return <div>{format}</div>;
-              })}
-            </div>
 
             <div>
               <Box

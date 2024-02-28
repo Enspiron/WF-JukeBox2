@@ -6,7 +6,7 @@ class FilterChars {
   filtered = [];
 
   constructor() {
-    console.log(this.Chars);
+    // console.log(this.Chars);
   }
 
   setFilterByDevName(DevNicknames) {
@@ -21,15 +21,17 @@ class FilterChars {
   setFilterByAttribute(Attribute) {
     //Attribute is an array of attributes.
     console.log("Attribute", Attribute);
-    return this.Chars.filter((obj) => Attribute.includes(obj.Attribute));
+    this.filtered = this.Chars.filter((obj) => Attribute.includes(obj.Attribute));
+    return this.filtered;
   }
 
   setFilterByRarity(Rarity) {
+    console.log("Rarity", Rarity);
     return this.Chars.filter((obj) => Rarity.includes(obj.Rarity));
   }
 
   setFilterByENName(ENName) {
-    this.filtered = this.Chars.filter((char) => {
+    this.filtered = this.filtered.filter((char) => {
       if (ENName && char.ENName === ENName) {
         return true;
       }
@@ -51,6 +53,12 @@ class FilterChars {
       DevNicknames +
       "/full_shot_0.png"
     );
+  }
+
+  resetFilter() {
+    this.filtered = this.Chars;
+    console.log("Filter reset", this.filtered);
+    return this.filtered;
   }
 
   songURL(DevNicknames) {
