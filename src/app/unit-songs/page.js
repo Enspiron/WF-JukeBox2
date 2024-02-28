@@ -32,7 +32,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 import styles from "../page.module.css";
-import AudioPlayer from "material-ui-audio-player";
 
 import FilterChars from "./FilterChars";
 
