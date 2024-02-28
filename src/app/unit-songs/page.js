@@ -41,7 +41,6 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
-
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../theme";
 
@@ -82,16 +81,9 @@ import One from "./rarity/star1.png";
 
 import Character from "../../Character.js";
 
-
 import { Filter } from "@mui/icons-material";
 
-
-
-
 export default function Home() {
-
-  
-
   const charFiltering = new FilterChars();
   const [attributes, setAttributes] = React.useState(() => []);
   const [rarity, setRarity] = React.useState(() => []);
@@ -106,8 +98,7 @@ export default function Home() {
 
   const [filter, setFilter] = React.useState(() => charFiltering.Chars);
 
-  const unit = new Character(clickedUnit)
-
+  const unit = new Character(clickedUnit);
 
   const handleFormat = (event, newFormats) => {
     setAttributes(newFormats);
@@ -150,15 +141,7 @@ export default function Home() {
     // console.log("Filter Check", charFiltering.setFilterByRarity(rarity, filter));
     setFilter(charFiltering.setFilterByRarity(rarity));
     if (rarity.length === 0) {
-      setFilter(
-        charFiltering.setFilterByRarity([
-          "5",
-          "4",
-          "3",
-          "2",
-          "1",
-        ]),
-      );
+      setFilter(charFiltering.setFilterByRarity(["5", "4", "3", "2", "1"]));
     }
   }, [rarity]);
 
@@ -175,8 +158,6 @@ export default function Home() {
       setFilter(charFiltering.Chars);
     }
   }, [term]);
-
-
 
   return (
     <div>
@@ -297,8 +278,8 @@ export default function Home() {
 
               <Button
                 onClick={() => {
-                  setAttributes([]);
-                  setRarity([]);
+                  setAttributes(() => []);
+                  setRarity(() => []);
                   setTerm("");
                   setFilter(charFiltering.resetFilter());
                 }}
@@ -334,10 +315,13 @@ export default function Home() {
                 >
                   {filter.map((char) => {
                     return (
-                      <ToolTip title={char.ENName} arrow size='lg'>
+                      <ToolTip title={char.ENName} arrow size="lg">
                         <Item
                           style={{ cursor: "pointer", padding: "1px" }}
-                          onClick={() => {setClickedUnit(char.DevNicknames); unit.changeUnit(clickedUnit)}}
+                          onClick={() => {
+                            setClickedUnit(char.DevNicknames);
+                            unit.changeUnit(clickedUnit);
+                          }}
                         >
                           <img
                             src={charFiltering.getCharIcon(char.DevNicknames)}
@@ -403,7 +387,11 @@ export default function Home() {
                     <List>
                       {unit.getSongs().map((song) => (
                         <ListItem>
-                          <ListItemButton onClick={() => {setSongURL(unit.makeSongURL(song));}}>
+                          <ListItemButton
+                            onClick={() => {
+                              setSongURL(unit.makeSongURL(song));
+                            }}
+                          >
                             {song}
                           </ListItemButton>
                         </ListItem>
@@ -467,9 +455,13 @@ export default function Home() {
                       <List>
                         {charFiltering.songURL(clickedUnit).map((song) => (
                           <ListItem>
-                            <ListItemButton onClick={() => {setSongURL(unit.makeSongURL(song));}}>
-                            {song}
-                          </ListItemButton>
+                            <ListItemButton
+                              onClick={() => {
+                                setSongURL(unit.makeSongURL(song));
+                              }}
+                            >
+                              {song}
+                            </ListItemButton>
                           </ListItem>
                         ))}
                       </List>

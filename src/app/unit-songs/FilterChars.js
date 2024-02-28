@@ -21,7 +21,9 @@ class FilterChars {
   setFilterByAttribute(Attribute) {
     //Attribute is an array of attributes.
     console.log("Attribute", Attribute);
-    this.filtered = this.Chars.filter((obj) => Attribute.includes(obj.Attribute));
+    this.filtered = this.Chars.filter((obj) =>
+      Attribute.includes(obj.Attribute),
+    );
     return this.filtered;
   }
 
@@ -56,9 +58,9 @@ class FilterChars {
   }
 
   resetFilter() {
-    this.filtered = this.Chars;
+    this.filtered = characters.chars;
     console.log("Filter reset", this.filtered);
-    return this.filtered;
+    return characters.chars;
   }
 
   songURL(DevNicknames) {
