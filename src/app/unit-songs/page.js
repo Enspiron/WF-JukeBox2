@@ -88,7 +88,7 @@ import Character from "../../Character.js";
 
 import { Filter } from "@mui/icons-material";
 
-export default async function Home() {
+export default function Home() {
   const charFiltering = new FilterChars();
   const [attributes, setAttributes] = React.useState(() => []);
   const [rarity, setRarity] = React.useState(() => []);
@@ -120,6 +120,7 @@ export default async function Home() {
   };
 
   const handleRarity = (event, newRarity) => {
+    console.log("NEW RARITY",newRarity);
     setRarity(newRarity);
   };
 
@@ -170,9 +171,47 @@ export default async function Home() {
     }
   }, [term]);
 
+  function Filtering() {
+    return filter.map((char) => {
+      return (
+        <ToolTip title={char.ENName} arrow size="lg">
+          <Item
+            style={{
+              cursor: 'pointer',
+              padding: 1,
+              // opacity: new Character(char.DevNicknames).hasSong() ? 1 : 0.5,
+            }}                          
+            onClick={() => {
+              setClickedUnit(char.DevNicknames);
+              unit.changeUnit(clickedUnit);
+            }}
+          >
+            <img
+              src={charFiltering.getCharIcon(char.DevNicknames)}
+              alt={char.DevNicknames}
+              width={50}
+              height={50}
+            />
+          </Item>
+        </ToolTip>
+      );
+    })
+  }
+
+  async function CharImage() {
+    return (
+      <Suspense fallback={<Loading />}>
+      <img
+          src={charFiltering.getCharArt(clickedUnit)}
+          alt={clickedUnit}
+          style={{ maxWidth: "100%", height: "auto" }}
+        />
+      </Suspense>
+    )
+  }
+
   return (
     <div>
-      <Suspense fallback={<Loading />}>
       {clickedUnit == null ? (
         <div>
           <Box>
@@ -325,28 +364,7 @@ export default async function Home() {
                   spacing={2}
                   justifyContent="center"
                 >
-                    <Suspense fallback={<Loading />}>
-                  {filter.map((char) => {
-                    return (
-                      <ToolTip title={char.ENName} arrow size="lg">
-                        <Item
-                          style={{ cursor: "pointer", padding: "1px" }}
-                          onClick={() => {
-                            setClickedUnit(char.DevNicknames);
-                            unit.changeUnit(clickedUnit);
-                          }}
-                        >
-                          <img
-                            src={charFiltering.getCharIcon(char.DevNicknames)}
-                            alt={char.DevNicknames}
-                            width={50}
-                            height={50}
-                          />
-                        </Item>
-                      </ToolTip>
-                    );
-                  })}
-                  </Suspense>
+                  <Filtering />
                 </Grid>
               </Box>
             </div>
@@ -391,11 +409,8 @@ export default async function Home() {
                       }}
                     >
                       {charFiltering.getEnName(clickedUnit).ENName}
-                      <img
-                        src={charFiltering.getCharArt(clickedUnit)}
-                        alt={clickedUnit}
-                        style={{ maxWidth: "100%", height: "auto" }}
-                      />
+                      
+                      <CharImage />
                     </div>
 
                     <List>
@@ -403,7 +418,7 @@ export default async function Home() {
                         <ListItem>
                           <ListItemButton
                             onClick={() => {
-                              setSongURL(unit.makeSongURL(song));
+                             setSongURL(unit.makeSongURL(song));
                             }}
                           >
                             {song}
@@ -500,7 +515,6 @@ export default async function Home() {
           </Stack>
         </div>
       )}
-      </Suspense>
     </div>
   );
 }

@@ -147,6 +147,14 @@ export default class Character{
         return `https://github.com/Enspiron/WorldFlipperPlayer/raw/main/character_unique/${this.Unit.DevNicknames}/${song}`
     }
 
+    hasSong() {
+        if (this.Unit.songs) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     getSongs() {  
         return this.Unit.songs;
     }
