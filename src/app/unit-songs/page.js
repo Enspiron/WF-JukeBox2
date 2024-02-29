@@ -44,6 +44,9 @@ import ListItemText from "@mui/material/ListItemText";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../theme";
 
+import {Suspense} from "react";
+
+
 //set title to "Unit Songs"
 // export const metadata = {
 //     title: "Unit Songs",
@@ -79,11 +82,13 @@ import Three from "./rarity/star3.png";
 import Two from "./rarity/star2.png";
 import One from "./rarity/star1.png";
 
+import Loading from './loading.js'
+
 import Character from "../../Character.js";
 
 import { Filter } from "@mui/icons-material";
 
-export default function Home() {
+export default async function Home() {
   const charFiltering = new FilterChars();
   const [attributes, setAttributes] = React.useState(() => []);
   const [rarity, setRarity] = React.useState(() => []);
@@ -99,6 +104,12 @@ export default function Home() {
   const [filter, setFilter] = React.useState(() => charFiltering.Chars);
 
   const unit = new Character(clickedUnit);
+
+  async function getChars() {
+    const charList = charFiltering.Chars;
+    setFilter(charList);
+    return charList;
+  }
 
   const handleFormat = (event, newFormats) => {
     setAttributes(newFormats);
@@ -161,6 +172,7 @@ export default function Home() {
 
   return (
     <div>
+      <Suspense fallback={<Loading />}>
       {clickedUnit == null ? (
         <div>
           <Box>
@@ -313,6 +325,7 @@ export default function Home() {
                   spacing={2}
                   justifyContent="center"
                 >
+                    <Suspense fallback={<Loading />}>
                   {filter.map((char) => {
                     return (
                       <ToolTip title={char.ENName} arrow size="lg">
@@ -333,6 +346,7 @@ export default function Home() {
                       </ToolTip>
                     );
                   })}
+                  </Suspense>
                 </Grid>
               </Box>
             </div>
@@ -440,11 +454,13 @@ export default function Home() {
                       }}
                     >
                       {charFiltering.getEnName(clickedUnit).ENName}
+                      <Suspense fallback={<Loading />}>
                       <img
                         src={charFiltering.getCharArt(clickedUnit)}
                         alt={clickedUnit}
                         style={{ maxWidth: "100%", height: "auto" }}
                       />
+                      </Suspense>
                     </div>
                     <Stack
                       direction="column"
@@ -484,6 +500,7 @@ export default function Home() {
           </Stack>
         </div>
       )}
+      </Suspense>
     </div>
   );
 }
