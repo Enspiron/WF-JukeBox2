@@ -27,14 +27,14 @@ class FilterChars {
     return this.filtered;
   }
 
-setFilterByRarity(Rarigty) {
+  setFilterByRarity(Rarity) {
     console.log("Rarity", Rarity);
-    const filterRarity = this.Chars.filter((obj) => 
-            Rarity.map(Number).includes(obj.Rarity),
+    const filterRarity = this.Chars.filter((obj) =>
+      Rarity.map(Number).includes(obj.Rarity),
     );
     console.log(filterRarity);
     return filterRarity;
-}
+  }
 
   setFilterByENName(ENName) {
     this.filtered = this.filtered.filter((char) => {
