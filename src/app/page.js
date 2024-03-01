@@ -1,5 +1,6 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import Button from "@mui/material/Button";
 
 //set title to "Home"
 export const metadata = {
@@ -12,8 +13,28 @@ import { Character } from "../Character.js";
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <h1>Developed by Enspiron</h1>
+    <main >
+      <h1
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+      >Developed by Enspiron</h1>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+      >
+      <p>Currently in Development </p>
+      <Button variant="contained" href="https://wfjukebox.com">
+        Main Site
+      </Button>
+      </div>
     </main>
   );
 }
