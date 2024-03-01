@@ -17,7 +17,10 @@ const SitesNotReady = {
 }
 
 function GetSiteLocation() {
-    const urlPath = window.location.pathname;
+    let urlPath = "";
+    if (typeof window !== 'undefined') {
+        urlPath = window.location.pathname;
+    }
     const parts = urlPath.split('/');
     return parts[1];
 }
