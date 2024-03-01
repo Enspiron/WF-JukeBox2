@@ -88,6 +88,7 @@ import One from "./rarity/star1.png";
 import Character from "../../Character.js";
 
 import { Filter } from "@mui/icons-material";
+import MP3Player from "./MP3Player.js";
 
 export default function Home() {
   const charFiltering = new FilterChars();
@@ -97,6 +98,7 @@ export default function Home() {
 
   const [clickedUnit, setClickedUnit] = React.useState(() => null);
   const [songURL, setSongURL] = React.useState(() => null);
+  const [songName, setSongName] = React.useState(() => "Nothing Clicked");
 
   const [rarityWidth, setRarityWidth] = React.useState(() => 72);
 
@@ -409,17 +411,16 @@ export default function Home() {
                       }}
                     >
                       {charFiltering.getEnName(clickedUnit).ENName}
-                      
-                      {/* <CharImage /> */}
-                      <SuspenseImage src={charFiltering.getCharArt(clickedUnit)} alt={clickedUnit} width={"100%"} height={"auto"} />
+                      <MP3Player char={new Character(clickedUnit)} song={songURL} clickedSong={songName} />
                     </div>
-
                     <List>
+                      
                       {unit.getSongs().map((song) => (
                         <ListItem>
                           <ListItemButton
                             onClick={() => {
-                             setSongURL(unit.makeSongURL(song));
+                            setSongURL(unit.makeSongURL(song));
+                            setSongName(song);
                             }}
                           >
                             {song}
@@ -427,11 +428,12 @@ export default function Home() {
                         </ListItem>
                       ))}
                     </List>
+
                   </>
                 )}
 
                 {/* Audio player */}
-                <ThemeProvider theme={theme}>
+                {/* <ThemeProvider theme={theme}>
                   <audio
                     controls
                     src={songURL}
@@ -440,7 +442,7 @@ export default function Home() {
                     style={{ width: "100%" }}
                     auto
                   />
-                </ThemeProvider>
+                </ThemeProvider> */}
               </Stack>
             )}
 

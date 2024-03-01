@@ -94,6 +94,7 @@ export default class Character{
         if (this.Unit) {
             this.enName = this.Unit.ENName;
             this.attribute = this.Unit.Attribute;
+            this.DevNicknames = DevNicknames;
 
             this.UnitKit.ManaBoard.ManaBoard1.ability1 = this.Unit.Ability1;
             this.UnitKit.ManaBoard.ManaBoard1.ability2 = this.Unit.Ability2;
@@ -162,6 +163,11 @@ export default class Character{
             return ["No Songs :("];
         }
     }
+
+    getUnitIcon() {
+        return `https://eliya-bot.herokuapp.com/img/assets/chars/${this.Unit.DevNicknames}/square_0.png`
+    }
+    
 
 }
 
