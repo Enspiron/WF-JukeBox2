@@ -31,11 +31,7 @@ function CheckLocation() {
 }
 
 export default function NotFound() {
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            location = window.location.href;
-        }
-    }, []);
+
 
     return (
         <main
