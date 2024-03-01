@@ -29,6 +29,9 @@ import Image from "next/image";
 import ToolTip from "@mui/material/Tooltip";
 import MenuIcon from "@mui/icons-material/Menu";
 
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 import styles from "../page.module.css";
@@ -105,6 +108,21 @@ export default function Home() {
   const isDesktop = useMediaQuery("(min-width: 600px)");
 
   const [filter, setFilter] = React.useState(() => charFiltering.Chars);
+
+  const [options, setOptions] = React.useState(() => "Music");
+  const [open, setOpen] = React.useState(() => false);
+
+  const handleOptionChange = (event) => {
+    setOptions(event.target.value);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
   const unit = new Character(clickedUnit);
 
@@ -202,16 +220,6 @@ export default function Home() {
     })
   }
 
-  function CharImage() {
-    return (
-      <img
-          src={charFiltering.getCharArt(clickedUnit)}
-          alt={clickedUnit}
-          style={{ maxWidth: "100%", height: "auto" }}
-        />
-    )
-  }
-
   return (
     <div>
       {clickedUnit == null ? (
@@ -279,6 +287,7 @@ export default function Home() {
                   display: "flex",
                   border: (theme) => `1px solid ${theme.palette.divider}`,
                   flexWrap: "wrap",
+                  justifyContent: "center",
                 }}
               >
                 <StyledToggleButtonGroup
@@ -380,6 +389,18 @@ export default function Home() {
             {!isDesktop && (
               <Stack>
                 {/* Back button  at top*/}
+                <Select 
+                  labelId="demo-controlled-open-select-label"
+                  id="demo-controlled-open-select"
+                  open={open}
+                  onClose={handleClose}
+                  onOpen={handleOpen}
+                  value={options}
+                  onChange={handleOptionChange}
+                >
+                  <MenuItem value="Music">Music</MenuItem>
+                  <MenuItem value="Art">Art</MenuItem>
+                </Select>
                 <Stack direction="row">
                   <Button
                     varient="outlined"
@@ -392,7 +413,7 @@ export default function Home() {
                     onClick={() => setClickedUnit(null)}
                     fullWidth
                     variant="outlined"
-                    style={{ marginTop: "15px", marginRight: "15px" }}
+                    style={{ margin: "15px"}}
                   >
                     <Stack direction="row" justifyContent="center">
                       Back
@@ -402,7 +423,7 @@ export default function Home() {
 
                 {/* Conditional content based on clickedUnit */}
                 {clickedUnit && (
-                  <>
+                  <>testing testing
                     <div
                       style={{
                         display: "flex",
@@ -416,11 +437,18 @@ export default function Home() {
                     <List>
                       
                       {unit.getSongs().map((song) => (
-                        <ListItem>
+                        <ListItem
+                          style={{
+                            justifyContent: "center",
+                          }}
+                        >
                           <ListItemButton
                             onClick={() => {
                             setSongURL(unit.makeSongURL(song));
                             setSongName(song);
+                            }}
+                            style={{
+                              justifyContent: "center",
                             }}
                           >
                             {song}
@@ -432,26 +460,15 @@ export default function Home() {
                   </>
                 )}
 
-                {/* Audio player */}
-                {/* <ThemeProvider theme={theme}>
-                  <audio
-                    controls
-                    src={songURL}
-                    type="audio/mpeg"
-                    loop
-                    style={{ width: "100%" }}
-                    auto
-                  />
-                </ThemeProvider> */}
               </Stack>
             )}
 
             {/* Desktop layout */}
             <Button
               onClick={() => setClickedUnit(null)}
-              fullWidth
+              // fullWidth
               variant="outlined"
-              style={{ marginTop: "15px" }}
+              style={{ margin: "15px" }}
             >
               <Stack direction="row" justifyContent="center">
                 Back

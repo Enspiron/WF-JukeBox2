@@ -60,6 +60,7 @@ const handleOpenUserMenu = (event) => {
               letterSpacing: '.1rem',
               color: 'inherit',
               textDecoration: 'none',
+              justifyContent: 'center',
             }}
           >
             WF JukeBox
