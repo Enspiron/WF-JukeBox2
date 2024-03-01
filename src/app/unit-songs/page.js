@@ -389,18 +389,7 @@ export default function Home() {
             {!isDesktop && (
               <Stack>
                 {/* Back button  at top*/}
-                <Select 
-                  labelId="demo-controlled-open-select-label"
-                  id="demo-controlled-open-select"
-                  open={open}
-                  onClose={handleClose}
-                  onOpen={handleOpen}
-                  value={options}
-                  onChange={handleOptionChange}
-                >
-                  <MenuItem value="Music">Music</MenuItem>
-                  <MenuItem value="Art">Art</MenuItem>
-                </Select>
+                
                 <Stack direction="row">
                   <Button
                     varient="outlined"
@@ -409,26 +398,16 @@ export default function Home() {
                   >
                     <MenuIcon />
                   </Button>
-                  <Button
-                    onClick={() => setClickedUnit(null)}
-                    fullWidth
-                    variant="outlined"
-                    style={{ margin: "15px"}}
-                  >
-                    <Stack direction="row" justifyContent="center">
-                      Back
-                    </Stack>
-                  </Button>
+
                 </Stack>
 
                 {/* Conditional content based on clickedUnit */}
                 {clickedUnit && (
-                  <>testing testing
+                  <>
                     <div
                       style={{
                         display: "flex",
                         justifyContent: "center",
-                        alignItems: "center",
                       }}
                     >
                       {charFiltering.getEnName(clickedUnit).ENName}
@@ -462,7 +441,7 @@ export default function Home() {
 
               </Stack>
             )}
-
+            
             {/* Desktop layout */}
             <Button
               onClick={() => setClickedUnit(null)}

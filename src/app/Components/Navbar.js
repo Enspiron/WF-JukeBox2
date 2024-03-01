@@ -44,7 +44,7 @@ const handleOpenUserMenu = (event) => {
   };
 
   return (
-    <AppBar position="sticky">
+    <AppBar position="sticky" >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -66,7 +66,10 @@ const handleOpenUserMenu = (event) => {
             WF JukeBox
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 1, 
+            display: { xs: 'flex', md: 'none' } 
+          }}
+            >
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -105,10 +108,11 @@ const handleOpenUserMenu = (event) => {
           <Typography
             variant="h5"
             noWrap
+            
             component="a"
             href=""
             sx={{
-              mr: 2,
+              mr: 3,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
               fontFamily: 'monospace',
