@@ -45,6 +45,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "../theme";
 
 import {Suspense} from "react";
+import SuspenseImage from '../Components/SuspenseImage.js'
 
 
 //set title to "Unit Songs"
@@ -82,7 +83,7 @@ import Three from "./rarity/star3.png";
 import Two from "./rarity/star2.png";
 import One from "./rarity/star1.png";
 
-import Loading from './loading.js'
+// import Loading from './loading.js'
 
 import Character from "../../Character.js";
 
@@ -192,21 +193,20 @@ export default function Home() {
               width={50}
               height={50}
             />
+            {/* <SuspenseImage src={charFiltering.getCharIcon(char.DevNicknames)} alt={char.DevNicknames} width={50} height={50} /> */}
           </Item>
         </ToolTip>
       );
     })
   }
 
-  async function CharImage() {
+  function CharImage() {
     return (
-      <Suspense fallback={<Loading />}>
       <img
           src={charFiltering.getCharArt(clickedUnit)}
           alt={clickedUnit}
           style={{ maxWidth: "100%", height: "auto" }}
         />
-      </Suspense>
     )
   }
 
@@ -410,7 +410,8 @@ export default function Home() {
                     >
                       {charFiltering.getEnName(clickedUnit).ENName}
                       
-                      <CharImage />
+                      {/* <CharImage /> */}
+                      <SuspenseImage src={charFiltering.getCharArt(clickedUnit)} alt={clickedUnit} width={"100%"} height={"auto"} />
                     </div>
 
                     <List>
@@ -469,13 +470,12 @@ export default function Home() {
                       }}
                     >
                       {charFiltering.getEnName(clickedUnit).ENName}
-                      <Suspense fallback={<Loading />}>
-                      <img
+                      {/* <img
                         src={charFiltering.getCharArt(clickedUnit)}
                         alt={clickedUnit}
                         style={{ maxWidth: "100%", height: "auto" }}
-                      />
-                      </Suspense>
+                      /> */}
+                      <SuspenseImage src={charFiltering.getCharArt(clickedUnit)} alt={clickedUnit} width={"100%"} height={"auto"} />
                     </div>
                     <Stack
                       direction="column"

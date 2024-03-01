@@ -156,7 +156,11 @@ export default class Character{
     }
 
     getSongs() {  
-        return this.Unit.songs;
+        if (this.Unit.songs) {
+            return this.Unit.songs;
+        } else {
+            return ["No Songs :("];
+        }
     }
 
 }
