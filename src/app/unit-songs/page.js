@@ -28,9 +28,11 @@ import Stack from "@mui/material/Stack";
 import Image from "next/image";
 import ToolTip from "@mui/material/Tooltip";
 import MenuIcon from "@mui/icons-material/Menu";
+import FormControl from "@mui/material/FormControl";
 
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
 
 import useMediaQuery from "@mui/material/useMediaQuery";
 
@@ -50,6 +52,32 @@ import theme from "../theme";
 import {Suspense} from "react";
 import SuspenseImage from '../Components/SuspenseImage.js'
 
+import Fire from "./elements/element_red.png";
+import Water from "./elements/element_blue.png";
+import Wind from "./elements/element_green.png";
+import Thunder from "./elements/element_yellow.png";
+import Dark from "./elements/element_black.png";
+import Light from "./elements/element_white.png";
+
+import Five from "./rarity/star5.png";
+import Four from "./rarity/star4.png";
+import Three from "./rarity/star3.png";
+import Two from "./rarity/star2.png";
+import One from "./rarity/star1.png";
+
+import { Popover, Typography } from "@mui/material";
+
+// import Loading from './loading.js'
+
+import Character from "../../Character.js";
+import BottomNavigation from "../Components/BottomNavigation.js";
+
+import { Filter } from "@mui/icons-material";
+import MP3Player from "./UnitComponents/MP3Player.js";
+import Art from './UnitComponents/Art.js';
+import UnitKit from "./UnitComponents/UnitKit.js";
+import Soundboard from "./UnitComponents/Soundboard.js";
+import DesktopMP3Player from "./UnitComponents/DesktopMP3Player";
 
 //set title to "Unit Songs"
 // export const metadata = {
@@ -73,25 +101,7 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
     },
 }));
 
-import Fire from "./elements/element_red.png";
-import Water from "./elements/element_blue.png";
-import Wind from "./elements/element_green.png";
-import Thunder from "./elements/element_yellow.png";
-import Dark from "./elements/element_black.png";
-import Light from "./elements/element_white.png";
 
-import Five from "./rarity/star5.png";
-import Four from "./rarity/star4.png";
-import Three from "./rarity/star3.png";
-import Two from "./rarity/star2.png";
-import One from "./rarity/star1.png";
-
-// import Loading from './loading.js'
-
-import Character from "../../Character.js";
-
-import { Filter } from "@mui/icons-material";
-import MP3Player from "./MP3Player.js";
 
 export default function Home() {
   const charFiltering = new FilterChars();
@@ -102,6 +112,7 @@ export default function Home() {
   const [clickedUnit, setClickedUnit] = React.useState(() => null);
   const [songURL, setSongURL] = React.useState(() => null);
   const [songName, setSongName] = React.useState(() => "Nothing Clicked");
+  const [currentPage, setCurrentPage] = React.useState(() => "Music");
 
   const [rarityWidth, setRarityWidth] = React.useState(() => 72);
 
@@ -146,14 +157,14 @@ export default function Home() {
   };
 
   React.useEffect(() => {
-    !isDesktop ? setRarityWidth(47) : setRarityWidth(72);
+    !isDesktop ? setRarityWidth(48) : setRarityWidth(72);
   });
 
   React.useEffect(() => {
     // setFilter(FilterChars.setf
     console.log(attributes);
     // console.log("Filter Check", charFiltering.setFilterByAttribute(attributes, filter));
-    setFilter(charFiltering.setFilterByAttribute(attributes));
+    setFilter(charFiltering.setFilterByAttribute(attributes, filter));
     if (attributes.length === 0) {
       setFilter(
         charFiltering.setFilterByAttribute([
@@ -163,7 +174,7 @@ export default function Home() {
           "Thunder",
           "Dark",
           "Light",
-        ]),
+        ], filter),
       );
     }
   }, [attributes]);
@@ -172,9 +183,9 @@ export default function Home() {
     // setFilter(FilterChars.setf
     console.log(rarity);
     // console.log("Filter Check", charFiltering.setFilterByRarity(rarity, filter));
-    setFilter(charFiltering.setFilterByRarity(rarity));
+    setFilter(charFiltering.setFilterByRarity(rarity, filter));
     if (rarity.length === 0) {
-      setFilter(charFiltering.setFilterByRarity(["5", "4", "3", "2", "1"]));
+      setFilter(charFiltering.setFilterByRarity(["5", "4", "3", "2", "1"], filter));
     }
   }, [rarity]);
 
@@ -194,13 +205,24 @@ export default function Home() {
 
   function Filtering() {
     return filter.map((char) => {
+      const [anchorEl, setAnchorEl] = React.useState(null);
+
+      const handlePopoverOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+      };
+    
+      const handlePopoverClose = () => {
+        setAnchorEl(null);
+      };
       return (
-        <ToolTip title={char.ENName} arrow size="lg">
           <Item
             style={{
               cursor: 'pointer',
-              padding: 1,
-              // opacity: new Character(char.DevNicknames).hasSong() ? 1 : 0.5,
+              padding: "1px 1px 0px 1px", // Remove bottom padding
+              height: "fit-content",
+              margin: "1px",
+              // border: "1px solid blue",
+
             }}                          
             onClick={() => {
               setClickedUnit(char.DevNicknames);
@@ -209,13 +231,18 @@ export default function Home() {
           >
             <img
               src={charFiltering.getCharIcon(char.DevNicknames)}
-              alt={char.DevNicknames}
+              // alt={char.DevNicknames}
+              // style={{border: "1px solid red"}}
               width={50}
               height={50}
+              style={{
+                borderRadius: "80%",
+              }}
             />
-            {/* <SuspenseImage src={charFiltering.getCharIcon(char.DevNicknames)} alt={char.DevNicknames} width={50} height={50} /> */}
+            <Popover>
+              <Typography>{char.ENName}</Typography>
+            </Popover>
           </Item>
-        </ToolTip>
       );
     })
   }
@@ -227,12 +254,13 @@ export default function Home() {
           <Box>
             <Stack
               style={{ margin: "5px" }}
-              spacing={2}
+              spacing={0.5}
               {...(isDesktop
                 ? {
                     direction: "row",
                     justifyContent: "center",
                     alignItems: "center",
+                    position: "sticky",
                   }
                 : { direction: "column" })}
             >
@@ -259,6 +287,7 @@ export default function Home() {
                   value={attributes}
                   onChange={handleFormat}
                   aria-label="text formatting"
+                  
                 >
                   <ToggleButton value="Fire">
                     <Image src={Fire} alt="Fire" width={20} height={20} />
@@ -354,30 +383,28 @@ export default function Home() {
             </Stack>
 
             <div>
-              <Box
-                sx={{
-                  flexGrow: 1,
-                  height: { xs: "400px", md: "auto" },
-                  overflowY: "auto",
-                }}
-                md={{
-                  display: "flex",
-                  flexDirection: "row",
-                  flexWrap: "wrap",
-                  justifyContent: "space-around",
-                  alignItems: "center",
-                }}
-              >
-                <Grid
-                  container
-                  columnSpacing={{ xs: 1, sm: 0, md: 1 }}
-                  rowSpacing={{ xs: 0, sm: 0, md: 0 }}
-                  spacing={2}
-                  justifyContent="center"
-                >
-                  <Filtering />
-                </Grid>
-              </Box>
+            <Box
+            sx={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              width: '100%',
+              height: { xs: "420px", md: "85vh" },
+              overflowY: "auto",
+              alignItems: "stretch",
+              
+            }}
+          >
+            <Grid
+              container
+              columnSpacing={{ xs: 1, sm: 0, md: 1 }}
+              rowSpacing={{ xs: 0, sm: 0, md: 0 }}
+              spacing={2}
+              justifyContent="center"
+            >
+              <Filtering />
+            </Grid>
+          </Box>
             </div>
           </Box>
         </div>
@@ -389,62 +416,68 @@ export default function Home() {
             {!isDesktop && (
               <Stack>
                 {/* Back button  at top*/}
-                
-                <Stack direction="row">
-                  <Button
-                    varient="outlined"
-                    justifyContent="center"
-                    style={{ marginTop: "15px" }}
-                  >
-                    <MenuIcon />
-                  </Button>
-
-                </Stack>
-
                 {/* Conditional content based on clickedUnit */}
                 {clickedUnit && (
                   <>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                      }}
-                    >
-                      {charFiltering.getEnName(clickedUnit).ENName}
-                      <MP3Player char={new Character(clickedUnit)} song={songURL} clickedSong={songName} />
-                    </div>
-                    <List>
-                      
-                      {unit.getSongs().map((song) => (
-                        <ListItem
+                    {currentPage === "Music" && (
+                      <>
+                        <div
                           style={{
+                            display: "flex",
                             justifyContent: "center",
+                            marginTop: "15px",
                           }}
                         >
-                          <ListItemButton
-                            onClick={() => {
-                            setSongURL(unit.makeSongURL(song));
-                            setSongName(song);
-                            }}
-                            style={{
-                              justifyContent: "center",
-                            }}
-                          >
-                            {song}
-                          </ListItemButton>
-                        </ListItem>
-                      ))}
-                    </List>
-
+                          <MP3Player char={new Character(clickedUnit)} song={songURL} clickedSong={songName} />
+                        </div>
+                        <List>
+                          {unit.getSongs().map((song, index) => (
+                            <ListItem
+                              key={index}
+                              style={{
+                                justifyContent: "center",
+                              }}
+                            >
+                              <ListItemButton
+                                onClick={() => {
+                                  setSongURL(unit.makeSongURL(song));
+                                  setSongName(song);
+                                }}
+                                style={{
+                                  justifyContent: "center",
+                                }}
+                              >
+                                {song}
+                              </ListItemButton>
+                            </ListItem>
+                          ))}
+                        </List>
+                      </>
+                    )}
+                    {currentPage === "Art" && (
+                      <>
+                        <Art unit={clickedUnit} />
+                      </>
+                    )}
+                    {currentPage === "Kit" && (
+                      <>
+                        <UnitKit unit={clickedUnit} />
+                      </>
+                    )}
+                    {currentPage === "Soundboard" && (
+                      <>
+                        <Soundboard unit={clickedUnit} />
+                      </>
+                    )}
                   </>
                 )}
+                <BottomNavigation goback={setClickedUnit} setpage={setCurrentPage}/>
 
               </Stack>
             )}
             
             {/* Desktop layout */}
-            <Button
-              onClick={() => setClickedUnit(null)}
+            {isDesktop && (<Button onClick={() => {setClickedUnit(null); setSongName("Nothing Clicked");}}              
               // fullWidth
               variant="outlined"
               style={{ margin: "15px" }}
@@ -452,7 +485,7 @@ export default function Home() {
               <Stack direction="row" justifyContent="center">
                 Back
               </Stack>
-            </Button>
+            </Button>)}
             {isDesktop && (
               <Stack direction="row" justifyContent="space-evenly">
                 {/* Back button */}
@@ -467,13 +500,7 @@ export default function Home() {
                         alignItems: "center",
                       }}
                     >
-                      {charFiltering.getEnName(clickedUnit).ENName}
-                      {/* <img
-                        src={charFiltering.getCharArt(clickedUnit)}
-                        alt={clickedUnit}
-                        style={{ maxWidth: "100%", height: "auto" }}
-                      /> */}
-                      <SuspenseImage src={charFiltering.getCharArt(clickedUnit)} alt={clickedUnit} width={"100%"} height={"auto"} />
+                      <img src={charFiltering.getCharIcon(clickedUnit)} alt={clickedUnit} width={"100%"} height={"auto"} />
                     </div>
                     <Stack
                       direction="column"
@@ -481,10 +508,18 @@ export default function Home() {
                       justifyContent="space-evenly"
                       width="20%"
                     >
-                      <List>
+                      <List
+                      style={{
+                        border: "1px solid rgba(0,0,0,0.38)",
+                      }}
+                      >
                         {charFiltering.songURL(clickedUnit).map((song) => (
                           <ListItem>
                             <ListItemButton
+                            style={{
+                              border: "1px solid rgba(0,0,0,0.78)",
+
+                            }}
                               onClick={() => {
                                 setSongURL(unit.makeSongURL(song));
                               }}
@@ -509,6 +544,7 @@ export default function Home() {
                   </>
                 )}
               </Stack>
+   
             )}
           </Stack>
         </div>

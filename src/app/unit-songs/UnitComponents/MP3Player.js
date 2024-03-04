@@ -15,6 +15,7 @@ import VolumeDownRounded from '@mui/icons-material/VolumeDownRounded';
 import './MP3Player.css'
 
 import useSound from 'use-sound';
+import theme from '../../theme';
 
 const WallPaper = styled('div')({
   position: 'absolute',
@@ -23,7 +24,8 @@ const WallPaper = styled('div')({
   top: 0,
   left: 0,
   overflow: 'hidden',
-  background: '#DCDCDC',
+  backgroundColor: 
+    theme.palette.mode === 'dark' ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.8)',
   transition: 'all 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s',
   '&::before': {
     content: '""',
@@ -57,7 +59,8 @@ const Widget = styled('div')(({ theme }) => ({
   position: 'relative',
   zIndex: 1,
   backgroundColor:
-    theme.palette.mode === 'dark' ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.4)',
+    theme.palette.mode === 'dark' ? 'rgba(0,0,0,0.90)' : 'rgba(255,255,255,0.38)',
+  border: '1px solid rgba(0,0,0,0.38)',
   backdropFilter: 'blur(40px)',
 }));
 
@@ -84,16 +87,6 @@ const TinyText = styled(Typography)({
 export default function MP3Player(props) {
   const theme = useTheme();
 //   const duration = 200; // seconds
-const [isPlaying, setIsPlaying] = useState(false);
-const [play, { pause, duration, sound }] = useSound(props.song);
-const [currTime, setCurrTime] = useState({
-    min: "",
-    sec: "",
-}); // current position of the audio in minutes and seconds
-
-const [seconds, setSeconds] = useState(); // current position of the audio in seconds
-
-
 
 
   const mainIconColor = theme.palette.mode === 'dark' ? '#fff' : '#000';

@@ -34,6 +34,14 @@ const handleOpenUserMenu = (event) => {
 };
 
   const handleCloseNavMenu = (page) => {
+    console.log(page.metaKey);
+    setAnchorElNav(null);
+    if(page.metaKey == undefined) {
+    window.location.href = page.href;
+    }
+  };
+
+  const handleButton = (page) => {
     console.log(page);
     window.location.href = page.href;
     setAnchorElNav(null);
@@ -45,7 +53,7 @@ const handleOpenUserMenu = (event) => {
 
   return (
     <AppBar position="sticky" >
-      <Container maxWidth="xl">
+ <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
             variant="h6"
@@ -128,12 +136,17 @@ const handleOpenUserMenu = (event) => {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
-                key={page.name}
-                onClick={()=>{handleCloseNavMenu(page)}}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page.name}
-              </Button>
+                  key={page.name}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    handleButton(page);
+                    // handleCloseNavMenu(page);
+                    // event.stopPropagation(); // Prevent bubbling
+                  }}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  {page.name}
+                </Button>
             ))}
           </Box>
         </Toolbar>

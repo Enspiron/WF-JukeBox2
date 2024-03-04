@@ -1,6 +1,7 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import Button from "@mui/material/Button";
+import PwaModal from './Components/PwaModal.js'
 
 //set title to "Home"
 export const metadata = {
@@ -34,6 +35,7 @@ export default function Home() {
       <Button variant="contained" href="https://wfjukebox.com">
         Main Site
       </Button>
+      <PwaModal />
       </div>
     </main>
   );

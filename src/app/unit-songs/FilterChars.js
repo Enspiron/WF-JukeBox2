@@ -18,27 +18,36 @@ class FilterChars {
     });
   }
 
-  setFilterByAttribute(Attribute) {
-    //Attribute is an array of attributes.
+  setFilterByAttribute(Attribute, Chars) {
+    // Attribute is an array of attributes.
     console.log("Attribute", Attribute);
-    this.filtered = this.Chars.filter((obj) =>
-      Attribute.includes(obj.Attribute),
-    );
-    return this.filtered;
-  }
+    
+    // Filter Chars based on whether their 'Attribute' matches any in the 'Attribute' array
+    this.filtered = Chars.filter((obj) => Attribute.map(String).includes(obj.Attribute));
 
-  setFilterByRarity(Rarity) {
+    // Log the filtered Chars
+    console.log("Chars", this.filtered);
+
+    // Return the filtered Chars
+    return this.filtered;
+}
+
+  setFilterByRarity(Rarity, Chars) {
     console.log("Rarity", Rarity);
-    const filterRarity = this.Chars.filter((obj) =>
-      Rarity.map(Number).includes(obj.Rarity),
+    //rarity is integer
+    const filterRarity = Chars.filter((obj) =>
+      Rarity.map(Number).includes(obj.Rarity)
     );
     console.log(filterRarity);
     return filterRarity;
   }
 
   setFilterByENName(ENName) {
+    //char.OtherCommonNames is also one of the possible searches
+    //OtherCommonNames can be like "a, b, c" so split it and search
     this.filtered = this.filtered.filter((char) => {
-      if (ENName && char.ENName === ENName) {
+      const otherNames = char.OtherCommonNames.split(", ");
+      if (ENName && (char.ENName === ENName || otherNames.includes(ENName))) {
         return true;
       }
       return false;

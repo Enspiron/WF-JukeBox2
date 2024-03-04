@@ -167,6 +167,46 @@ export default class Character{
     getUnitIcon() {
         return `https://eliya-bot.herokuapp.com/img/assets/chars/${this.Unit.DevNicknames}/square_0.png`
     }
+
+    getKit(type) {
+        if (type in this.UnitKit) {
+            return this.UnitKit[type];
+        } else {
+            console.log("Kit type not found: ", type)
+            return "Kit type not found: " + type
+        }
+    }
+
+    animation(type) {
+        const gifSource = 'https://wfjukebox.b-cdn.net/wfjukebox/character/character_art/'
+        const artSource = 'https://eliya-bot.herokuapp.com/img/assets/chars/'
+
+        const gifTypes = {
+            "special" : "/pixelart/animated/special.gif",
+            "skill_ready" : "/pixelart/animated/skill_ready.gif",
+            "kachidoki" : "/pixelart/animated/kachidoki.gif",
+            "walk_front" : "/pixelart/animated/walk_front.gif",
+            "walk_back" : "/pixelart/animated/walk_back.gif"
+        }
+
+        const artTypes = {
+            "square_0" : "/square_0.png",
+            "square_1" : "/square_1.png",
+            "full_shot_0" : "/full_shot_0.png",
+            "full_shot_1" : "/full_shot_1.png"
+        }
+
+        if(type in artTypes) {
+            return artSource + this.Unit.DevNicknames + artTypes[type]
+        }
+
+        if(type in gifTypes) {
+            return gifSource + this.Unit.DevNicknames + gifTypes[type]
+        }
+
+
+
+    }
     
 
 }

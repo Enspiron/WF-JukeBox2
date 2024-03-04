@@ -6,7 +6,7 @@ function Loading() {
         );        
 }
 
-export default async function SuspenseImage(props) {
+export default function SuspenseImage(props) {
     const { src, alt, width, height } = props;
     return (
         // <Suspense fallback={<Loading/>}>
