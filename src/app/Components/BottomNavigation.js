@@ -22,24 +22,56 @@ export default function SimpleBottomNavigation(props) {
     //props would contain the current page ex. props.page = 'home'
     const [value, setValue] = React.useState(2);
     const ref = React.useRef(null);
+    
+    const NavigationItems = [
+        {name: "Soundboard", icon: <CampaignIcon />},
+        {name: "Music", icon: <MusicNoteIcon />},
+        {name: "Art", icon: <PaletteIcon />},
+        {name: "Kit", icon: <HandymanIcon />}
+    ]
+
+    const buttonStyle = {
+        // width: "fit-content",
+        //left and right border
+        // border: "1px solid",
+        // borderRadius: "20px",
+        // margin: "2px",
+
+
+    }
+
+    const backButton = {
+      // border: "1px solid",
+      // width: "fit-content",
+      // borderRadius: "20px",
+      // padding: "-50px",
+      
+
+    }
 
     return(
         <Box sx={{ pb: 7 }} ref={ref}>
             <CssBaseline />
 
             <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+
         <BottomNavigation
           showLabels
           value={value}
           onChange={(event, newValue) => {
             setValue(newValue);
           }}
+          style={{marginRight: '20px'}}
         >
-          <BottomNavigationAction style={{width: "fit-content"}} onClick={()=>{props.setpage("Music"); props.goback(null)}} icon={<ArrowBackIosNewIcon/>} />
-          <BottomNavigationAction label="Soundboard" onClick={()=>{props.setpage("Soundboard")}} icon={<CampaignIcon />} />
-          <BottomNavigationAction label="Music" onClick={()=>{props.setpage("Music")}} icon={<MusicNoteIcon />} />
-          <BottomNavigationAction label="Art" onClick={()=>{props.setpage("Art")}} icon={<PaletteIcon />} />
-          <BottomNavigationAction label="Kit" onClick={()=>{props.setpage("Kit")}} icon={<HandymanIcon />} />
+          <BottomNavigationAction style={backButton} onClick={()=>{props.setpage("Music"); props.goback(null)}} icon={<ArrowBackIosNewIcon/>} />
+          {NavigationItems.map((item, index) => {
+              return(
+                <BottomNavigationAction style={buttonStyle} label={item.name} onClick={()=>{props.setpage(item.name)}} icon={item.icon} />
+              )
+          
+          })}
+
+
 
         </BottomNavigation>
       </Paper>

@@ -48,6 +48,7 @@ const WallPaper = styled('div')({
     //   'radial-gradient(at center center, rgb(247, 237, 225) 0%, rgba(247, 237, 225, 0) 70%)',
     transform: 'rotate(30deg)',
   },
+  zIndex: -1
 });
 
 const Widget = styled('div')(({ theme }) => ({
@@ -94,7 +95,7 @@ export default function MP3Player(props) {
     theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)';
 
   return (
-    <Box sx={{ width: '100%', overflow: 'hidden' }}>
+    <Box sx={{ overflow: 'hidden' }}>
       <Widget>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <CoverImage>

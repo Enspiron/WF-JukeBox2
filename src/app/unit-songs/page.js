@@ -1,6 +1,8 @@
 "use client";
 import * as React from "react";
 import { styled } from "@mui/material/styles";
+import { useRouter } from 'next/router';
+
 import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
 import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
 import FormatAlignRightIcon from "@mui/icons-material/FormatAlignRight";
@@ -65,6 +67,8 @@ import Three from "./rarity/star3.png";
 import Two from "./rarity/star2.png";
 import One from "./rarity/star1.png";
 
+import FilterModal from '../Components/FilterModal.js'
+
 import { Popover, Typography } from "@mui/material";
 
 // import Loading from './loading.js'
@@ -78,6 +82,11 @@ import Art from './UnitComponents/Art.js';
 import UnitKit from "./UnitComponents/UnitKit.js";
 import Soundboard from "./UnitComponents/Soundboard.js";
 import DesktopMP3Player from "./UnitComponents/DesktopMP3Player";
+
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+
+import PropTypes from 'prop-types';
 
 //set title to "Unit Songs"
 // export const metadata = {
@@ -116,12 +125,13 @@ export default function Home() {
 
   const [rarityWidth, setRarityWidth] = React.useState(() => 72);
 
-  const isDesktop = useMediaQuery("(min-width: 600px)");
+  const isDesktop = useMediaQuery("(min-width: 800px)");
 
   const [filter, setFilter] = React.useState(() => charFiltering.Chars);
 
   const [options, setOptions] = React.useState(() => "Music");
   const [open, setOpen] = React.useState(() => false);
+
 
   const handleOptionChange = (event) => {
     setOptions(event.target.value);
@@ -203,7 +213,62 @@ export default function Home() {
     }
   }, [term]);
 
+  React.useEffect(() => {
+    // setFilter(FilterChars.setf
+    console.log(filter);
+    // console.log("Filter Check", charFiltering.setFilterByRarity(rarity, filter));
+    setFilter(filter);
+  }, [filter]);
+
+  const TabList = [
+    { label : "Music"},
+    { label : "Art"},
+    { label : "Kit"},
+    { label : "Soundboard"},
+  ]
+
+  function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+  
+    return (
+      <div
+        role="tabpanel"
+        hidden={value !== index}
+        id={`full-width-tabpanel-${index}`}
+        aria-labelledby={`full-width-tab-${index}`}
+        {...other}
+      >
+        {value === index && (
+          <Box sx={{ p: 3 }}>
+            <Typography>{children}</Typography>
+          </Box>
+        )}
+      </div>
+    );
+  }
+
+  TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+  };
+  
+  function a11yProps(index) {
+    return {
+      id: `full-width-tab-${index}`,
+      'aria-controls': `full-width-tabpanel-${index}`,
+    };
+  }
+
+  const [tabValue, setTabValue] = React.useState(0);
+
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+  }
+
   function Filtering() {
+
+
     return filter.map((char) => {
       const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -395,6 +460,8 @@ export default function Home() {
               
             }}
           >
+            <FilterModal filter={filter} setFilter={setFilter} />
+
             <Grid
               container
               columnSpacing={{ xs: 1, sm: 0, md: 1 }}
@@ -403,8 +470,10 @@ export default function Home() {
               justifyContent="center"
             >
               <Filtering />
+
             </Grid>
           </Box>
+            
             </div>
           </Box>
         </div>
@@ -493,33 +562,46 @@ export default function Home() {
                 {/* Conditional content based on clickedUnit */}
                 {clickedUnit && (
                   <>
-                    <div
+                  <Box sx={{ width: '100%', bgcolor: 'background.paper', justifyContent: 'center', position:'absolute' }}>
+                    <Tabs value={tabValue} onChange={handleTabChange} variant="fullWidth" >
+                      {TabList.map((tab, index) => (
+                        <Tab label={tab.label} />
+                      ))}
+                    </Tabs>
+                    <TabPanel 
+                      value={tabValue} 
+                      index={0}
                       style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
+                        // border: "1px solid rgba(0,0,0,0.78)",
+                        width: 'fit-content',
+                        margin: 'auto',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
                       }}
                     >
-                      <img src={charFiltering.getCharIcon(clickedUnit)} alt={clickedUnit} width={"100%"} height={"auto"} />
-                    </div>
-                    <Stack
-                      direction="column"
-                      alignItems="stretch"
-                      justifyContent="space-evenly"
-                      width="20%"
-                    >
+                      <MP3Player char={new Character(clickedUnit)} song={songURL} clickedSong={songName} />
                       <List
-                      style={{
-                        border: "1px solid rgba(0,0,0,0.38)",
-                      }}
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          // border: "1px solid rgba(0,0,0,0.78)",
+                        }}
                       >
                         {charFiltering.songURL(clickedUnit).map((song) => (
-                          <ListItem>
-                            <ListItemButton
+                          <ListItem
+                            key={song} // Add a unique key to each list item
                             style={{
-                              border: "1px solid rgba(0,0,0,0.78)",
-
+                              width: "100%",
                             }}
+                          >
+                            <ListItemButton
+                              style={{
+                                background: "rgba(55,55,55,0.12)",
+                                width: '100%',
+                                borderRadius: "10px",
+                              }}
                               onClick={() => {
                                 setSongURL(unit.makeSongURL(song));
                               }}
@@ -529,8 +611,37 @@ export default function Home() {
                           </ListItem>
                         ))}
                       </List>
+                    </TabPanel>
+
+                    <TabPanel value={tabValue} index={1}>
+                      <Art unit={clickedUnit} />
+                    </TabPanel>
+                    <TabPanel value={tabValue} index={2}>
+                      <UnitKit unit={clickedUnit} />
+                    </TabPanel>
+                    <TabPanel value={tabValue} index={3}>
+                      <Soundboard unit={clickedUnit} />
+                    </TabPanel>
+                    
+                  </Box>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      {/* <img src={charFiltering.getCharIcon(clickedUnit)} alt={clickedUnit} width={"100%"} height={"auto"} /> */}
+                    </div>
+                    <Stack
+                      direction="column"
+                      alignItems="stretch"
+                      justifyContent="space-evenly"
+                      width="20%"
+                    >
+
                       {/* Audio player */}
-                      <ThemeProvider theme={theme}>
+                      {/* <ThemeProvider theme={theme}>
                         <audio
                           controls
                           src={songURL}
@@ -539,7 +650,7 @@ export default function Home() {
                           style={{ width: "100%" }}
                           auto
                         />
-                      </ThemeProvider>
+                      </ThemeProvider> */}
                     </Stack>
                   </>
                 )}

@@ -1,13 +1,16 @@
+// "use client";
 import { Inter } from "next/font/google";
-import * as React from 'react';
+// import * as React from 'react';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from '../theme';
+import React from 'react';
 
 import Navbar from "./Components/Navbar";
 
 import Character from '../Character.js'
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,6 +20,15 @@ export const metadata = {
 };
 export default function RootLayout(props) {
  
+  // const [mode, setMode] = React.useState('light');
+  // const colorMode = React.useMemo(
+  //   () => ({
+  //     toggleColorMode: () => {
+  //       setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+  //     },
+  //   }),
+  //   [],
+  // );
 
   return (
     <html lang="en">
