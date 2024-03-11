@@ -71,7 +71,7 @@ export default function ComicViewer() {
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
 
-    const isMobile = false;
+    let isMobile = false;
     // const isMobile = window.innerWidth < 800
     if(typeof window !== 'undefined') {
         if(window.innerWidth < 800) {
