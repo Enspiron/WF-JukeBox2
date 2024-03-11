@@ -71,7 +71,14 @@ export default function ComicViewer() {
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
 
-    const isMobile = window.innerWidth < 800
+    const isMobile = false;
+    // const isMobile = window.innerWidth < 800
+    if(typeof window !== 'undefined') {
+        if(window.innerWidth < 800) {
+            isMobile = true
+        }
+    }
+
 
     const [page, setPage] = React.useState(1)
     const PER_PAGE = isMobile ? 3 : 8;
