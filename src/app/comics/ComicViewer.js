@@ -14,7 +14,6 @@ import Modal from '@mui/material/Modal';
 import usePagination from "./Pagination.js";
 import Pagination from '@mui/material/Pagination';
 import Zoom from '@mui/material/Zoom';
-import TextField from '@mui/material'
 
 
 function ComicThumbnail(props) {
