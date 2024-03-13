@@ -14,6 +14,7 @@ import Modal from '@mui/material/Modal';
 import usePagination from "./Pagination.js";
 import Pagination from '@mui/material/Pagination';
 import Zoom from '@mui/material/Zoom';
+import { Desk } from '@mui/icons-material'
 
 
 function ComicThumbnail(props) {
@@ -30,7 +31,7 @@ function ComicThumbnail(props) {
             justifyContent: 'center',
             alignItems: 'center',
             // flexDirection: 'column',
-            width: 'fit-content',
+            width: props.isMobile ? '90%' : '100%',
             // scale: '0.5',
             // border: '1px solid black',
             padding: '5px',
@@ -44,16 +45,22 @@ function ComicThumbnail(props) {
             () => {props.setEpisode(props.episode); props.modal(true)}
         }
         >
-            <img src={comic.buildUrl('icon')} />
+            <img src={comic.buildUrl('icon')} 
+            style={{
+                width: '100%',
+            }}
+            />
             <Typography
             sx={{
-                fontSize: '1.2rem',
+                fontSize: props.isMobile ? '0.8rem' : '1rem',
             }}
             >Chapter {comic.episode}
             </Typography>
             <Typography
             sx={{
-                fontSize: '1rem',
+                fontSize: props.isMobile ? '0.5rem' : '1rem',
+                alignItems: 'center',
+                justifyContent: 'center',
             }}
             >{comic.title}</Typography>
         </Stack>
@@ -81,7 +88,7 @@ export default function ComicViewer() {
 
 
     const [page, setPage] = React.useState(1)
-    const PER_PAGE = isMobile ? 3 : 8;
+    const PER_PAGE = isMobile ? 9 : 8;
 
     const count = Math.ceil(en_comics.length / PER_PAGE);
     const _DATA = usePagination(en_comics, PER_PAGE);
@@ -128,58 +135,8 @@ export default function ComicViewer() {
         )
     }
 
-
-
-    const Item = styled(Paper)(({ theme }) => ({
-        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-        ...theme.typography.body2,
-        padding: theme.spacing(1),
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-      }));
-
-    const JumpToComic = (props) => {
-
+    const DesktopGrid = (props) => {
         return(
-            <TextField
-            id="jump"
-            label="Jump to comic"
-            type="number"
-            InputLabelProps={{
-                shrink: true,
-            }}
-            variant="outlined"
-            onChange={(e) => {
-                if (e.target.value > 0 && e.target.value <= en_comics.length) {
-                    setEpisode(e.target.value)
-                }
-            }}
-            />
-        )
-    }
-
-    return (
-        <Box
-        sx={{
-            backgroundImage: "url('https://worldflipper.jp/assets/images/kyoushujo//common/bg.png')"
-
-        }}
-        >
-
-        
-
-     
-
-
-            <Box
-                sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    flexDirection: 'column',
-                    
-                }}
-            >
             <Grid container spacing={6} columns={0}
             rowSpacing={3}
             columnSpacing={5}
@@ -200,13 +157,78 @@ export default function ComicViewer() {
                     }}>
                         <Zoom style={{ transitionDelay: false ? '500ms' : '0ms' }}>
 
-                        <ComicThumbnail episode={comic.episode} setEpisode={setEpisode} modal={setOpen} open={handleOpen}
+                        <ComicThumbnail episode={comic.episode} setEpisode={setEpisode} modal={setOpen} open={handleOpen} isMobile={props.isMobile}
 
                         />
                         </Zoom>
                     </Grid>
                 ))}
             </Grid>
+        )
+    }
+
+
+    const MobileGrid = (props) => {
+        return(
+            <Grid container 
+            rowSpacing={1}
+            columnSpacing={0}
+            // columnSpacing={0}
+            style={{
+                width: 'fit-content',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 'auto',
+            }}
+            >
+                {_DATA.currentData().map((comic, index) => (
+                    <Grid item  xs={4} style={{
+                        boxSizing: 'border-box',
+                        // backgroundColor: 'rgba(0,0,0,0.1)',
+                        // border: '1px solid rgba(0,0,0,0.6)',
+                    }}>
+                        <Zoom style={{ transitionDelay: false ? '500ms' : '0ms' }}>
+
+                        <ComicThumbnail episode={comic.episode} setEpisode={setEpisode} modal={setOpen} open={handleOpen} isMobile={props.isMobile}
+
+                        />
+                        </Zoom>
+                    </Grid>
+                ))}
+            </Grid>
+        )
+    }
+
+
+    const Item = styled(Paper)(({ theme }) => ({
+        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+        ...theme.typography.body2,
+        padding: theme.spacing(1),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+      }));
+
+
+    return (
+        <Box
+        sx={{
+            backgroundImage: "url('https://worldflipper.jp/assets/images/kyoushujo//common/bg.png')"
+
+        }}
+        >
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                    paddingTop: '50px',
+                    paddingBottom: '100px',
+                    
+                }}
+            >
+            {isMobile ? <MobileGrid isMobile={isMobile}/> : <DesktopGrid isMobile={isMobile}/>}
+            {/* <DesktopGrid /> */}
             <Pagination
             count={count}
             page={page}

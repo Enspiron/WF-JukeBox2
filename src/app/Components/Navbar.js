@@ -52,7 +52,11 @@ const handleOpenUserMenu = (event) => {
   };
 
   return (
-    <AppBar position="sticky" >
+    <AppBar position="sticky" 
+    sx={{
+      zIndex: (theme) => theme.zIndex.drawer + 1,
+    }}
+    >
  <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
