@@ -16,6 +16,10 @@ import Pagination from '@mui/material/Pagination';
 import Zoom from '@mui/material/Zoom';
 import { Desk } from '@mui/icons-material'
 
+import Button from '@mui/material/Button';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import latestNew from './comic_latest_new.png';
 
 function ComicThumbnail(props) {
     const episode = props.episode
@@ -50,6 +54,21 @@ function ComicThumbnail(props) {
                 width: '100%',
             }}
             />
+            <Stack
+            direction='row'
+            >
+
+            {props.new ? <Image src={latestNew} 
+            style={{
+
+                width: '20%', 
+                height: 'auto',
+                // margin: 'auto', 
+                // marginRight: 'auto',
+                
+            }}/> : <></>}
+            <Stack>
+
             <Typography
             sx={{
                 fontSize: props.isMobile ? '0.8rem' : '1rem',
@@ -63,6 +82,10 @@ function ComicThumbnail(props) {
                 justifyContent: 'center',
             }}
             >{comic.title}</Typography>
+                        </Stack>
+
+                        </Stack>
+
         </Stack>
     )
 }
@@ -94,6 +117,55 @@ export default function ComicViewer() {
     const _DATA = usePagination(en_comics, PER_PAGE);
 
     const ComicModal = (props) => {
+        const ComicNav = () => {
+            return(
+                <Stack
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    width: '100%',
+                    margin: 'auto',
+                }}
+                >
+                    <Button
+                    variant="contained"
+                    sx={{
+                        margin: 'auto',
+                    }}
+                    onClick={() => {
+                        if(episode > 1) {
+                            setEpisode(episode - 1)
+                            Comic.setEpisode(episode - 1)
+                        }
+                    }}
+                    >
+                        <ArrowBackIcon />
+                    </Button>
+                    <Typography>
+                        Chapter {episode}
+                    </Typography>
+
+                    <Button
+                    variant="contained" 
+                    sx={{
+                        margin: 'auto',
+                    }}
+                    onClick={() => {
+                        if(episode < en_comics.length) {
+                            setEpisode(episode + 1)
+                            Comic.setEpisode(episode + 1)
+                        }
+                    }}                   
+                    >
+                        <ArrowForwardIcon />
+                    </Button>
+                    
+                </Stack>
+            )
+        }
+
         return(
             <Modal
             open={open}
@@ -122,14 +194,19 @@ export default function ComicViewer() {
                     // margin: isMobile ? 'auto' : '10px',
                 }}
                 >
-                    <img src={Comic.buildUrl('base')} onClick={props.open}
+                    <ComicNav />
+                    <img
+  
+                    src={Comic.buildUrl('base')} onClick={props.open}
                     style={{
                         // position: 'absolute',
                         // left: '50%',
                         width: '100%',
+                        marginTop: '10px'
                     }}
                     
                     />
+                    <ComicNav />
                 </Box>
             </Modal>
         )
@@ -208,6 +285,14 @@ export default function ComicViewer() {
         color: theme.palette.text.secondary,
       }));
 
+    const LatestComic = () => {
+        return(
+            <Box>
+                <ComicThumbnail episode={en_comics.length} setEpisode={setEpisode} modal={setOpen} open={handleOpen} isMobile={isMobile} new={true}/>
+            </Box>
+        )
+    }
+
 
     return (
         <Box
@@ -222,11 +307,21 @@ export default function ComicViewer() {
                     justifyContent: 'center',
                     alignItems: 'center',
                     flexDirection: 'column',
-                    paddingTop: '50px',
+                    paddingTop: '10px',
                     paddingBottom: '100px',
                     
                 }}
             >
+            {isMobile ? <Image src={Banner} 
+            style={{
+                width: '90%',
+                height: 'auto',
+                margin: 'auto',
+                // backgroundColor: 'rgba(255, 255, 255, 0.9)',
+            }}
+            /> : <></>}
+            {/* {isMobile ? <LatestComic/> : <></>} */}
+
             {isMobile ? <MobileGrid isMobile={isMobile}/> : <DesktopGrid isMobile={isMobile}/>}
             {/* <DesktopGrid /> */}
             <Pagination
@@ -249,9 +344,9 @@ export default function ComicViewer() {
             />
             </Box>
             <div>
-                <ComicModal episode={
-                    episode
-                }/>
+                <ComicModal episode={episode}
+                setEpisode={setEpisode}
+                />
             {/* {comicVisible ? <ComicPopover episode={episode} /> : <></>} */}
             </div>
         </Box>
