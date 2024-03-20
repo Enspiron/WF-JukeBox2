@@ -596,7 +596,7 @@
         },
         {
           "name": "Zombie Land Saga Collab",
-          "icon": "",
+          "icon": "https://wfjukebox.b-cdn.net/boss_banners/collab/advent_Zcollab_event_banner.png",
           "id": "advent_event_z_collabo",
           "songs": {
             "story": [],
@@ -606,7 +606,7 @@
         },
         {
           "name": "Re Zero Collab",
-          "icon": "",
+          "icon": "https://wfjukebox.b-cdn.net/boss_banners/collab/advent_Rcollab_event_banner.png",
           "id": "advent_event_r_collabo",
           "songs": {
             "story": ["r_collabo_event_story_normal.mp3"],
@@ -616,7 +616,7 @@
         },
         {
           "name": "GrandBlue Fantasy Collab",
-          "icon": "",
+          "icon": "https://wfjukebox.b-cdn.net/boss_banners/collab/advent_Gcollab_event_banner.png",
           "id": "advent_event_g_collabo",
           "songs": {
             "story": ["g_collabo_event_story_battle3_arrange.mp3", "g_collabo_event_story_battle4_arrange.mp3"],
@@ -626,7 +626,7 @@
         },
         {
           "name": "Uma Musame Collab",
-          "icon": "",
+          "icon": "https://wfjukebox.b-cdn.net/boss_banners/collab/advent_u_collabo_event_banner.png",
           "id": "advent_event_u_collabo",
           "songs": {
             "story": ["u_collabo_event_story_normal_1.mp3", "u_collabo_event_story_normal_2.mp3"],
@@ -636,7 +636,7 @@
         },
         {
           "name": "Haruhi Collab",
-          "icon": "",
+          "icon": "https://wfjukebox.b-cdn.net/boss_banners/collab/advent_scollab_event_banner.png",
           "id": "advent_event_s_collabo",
           "songs": {
             "story": [],
@@ -646,12 +646,22 @@
         },
         {
           "name": "Konosuba Collab",
-          "icon": "",
+          "icon": "https://wfjukebox.b-cdn.net/boss_banners/collab/advent_k_collabo_event_banner.png",
           "id": "advent_event_k_collabo",
           "songs": {
             "story": [],
             "battle": ["k_collabo_event_battle.mp3"],
             "system": ["k_collabo_event_top.mp3"]
+          }
+        },
+        {
+          "name" : "Black Clover Collab",
+          "icon" : "https://wfjukebox.b-cdn.net/boss_banners/collab/advent_b_collabo_event_banner.png",
+          "id" : "advent_event_b_collabo",
+          "songs" : {
+            "story" : ["b_collabo_event_battle.mp3"],
+            "battle" : ["b_collabo_event_battle.mp3"],
+            "system" : ["b_collabo_event_top.mp3"]
           }
         }
       ],

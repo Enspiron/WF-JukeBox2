@@ -35,7 +35,7 @@ export default function Home() {
       <Button variant="contained" href="https://wfjukebox.com">
         Main Site
       </Button>
-      <PwaModal />
+      {/* <PwaModal /> */}
       </div>
     </main>
   );
