@@ -86,6 +86,18 @@ export default function EventSongs() {
     const [songURL, setSongURL] = React.useState("");
     const [selectedBoss, setSelectedBoss] = React.useState(null);
 
+    //window
+    var win;
+    if (typeof window !== "undefined") {
+        win = window;
+    }
+    else {
+        win = {
+            innerWidth: 0,
+            innerHeight: 0
+        }
+    }
+
     return (
         <Stack direction="column"
             sx={{
@@ -103,7 +115,7 @@ export default function EventSongs() {
             >
 
          
-            {window.innerWidth > 800 ? (<SongTypeToggle 
+            {win.innerWidth > 800 ? (<SongTypeToggle 
             musicType={musicType}
             setMusicType={setMusicType}
             closeWorld={setWorld}
@@ -117,7 +129,7 @@ export default function EventSongs() {
             {musicType === 'Event' && <EventMusic  setSongURL={setSongURL}/>}
             {musicType === 'Boss' && <BossList setSelectedBoss={setSelectedBoss} selectedBoss={selectedBoss} setSongURL={setSongURL}/>}
 
-            {(window.innerHeight < 800) ? (<BottomNavigation
+            {(win.innerHeight < 800) ? (<BottomNavigation
             showLabels
             value={musicType}
             onChange={(event, newValue) => {

@@ -77,7 +77,13 @@ function WorldMusic(props) {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    //define window width
+    var win;
+    if (typeof window !== "undefined") {
+        win = window;
+    }
+
+    const [windowWidth, setWindowWidth] = useState(win.innerWidth);
 
     return (
         <div>
