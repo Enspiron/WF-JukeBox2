@@ -15,7 +15,7 @@ import VolumeDownRounded from '@mui/icons-material/VolumeDownRounded';
 import './MP3Player.css'
 
 import useSound from 'use-sound';
-import theme from '../../theme';
+import theme from '../../../theme';
 
 const WallPaper = styled('div')({
   position: 'absolute',

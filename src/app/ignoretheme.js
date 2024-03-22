@@ -2,7 +2,7 @@
 import { Roboto } from 'next/font/google';
 import { createTheme } from '@mui/material/styles';
 
-import * as React from 'react';
+const themeMode = "dark";
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -10,12 +10,13 @@ const roboto = Roboto({
   display: 'swap',
 });
 
-var themeMode = "light"
+// localStorage.setItem('theme', themeMode);
 
-
-export function HandleThemeChange(props) {
-  
-}
+//addeventlistener for theme change from localstorage
+// window.addEventListener('storage', () => {
+//   const themeMode = localStorage.getItem('theme');
+//   theme.palette.mode = themeMode;
+// });
 
 
 const theme = createTheme({
@@ -30,7 +31,7 @@ const theme = createTheme({
       styleOverrides: {
         root: ({ ownerState }) => ({
           ...(ownerState.severity === 'info' && {
-            backgroundColor: '#60a5fa',
+            backgroundColor: '#00b377',
           }),
         }),
       },

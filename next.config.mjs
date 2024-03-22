@@ -1,5 +1,6 @@
 import React from 'react'
 import nextPWA from 'next-pwa';
+import next from 'next';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
@@ -9,8 +10,10 @@ const nextConfig = {
     },
 };
 
-// const withPWA = require('next-pwa')
+const withPWA = nextPWA({
+    dest: "public",
 
+});
 
 nextPWA({
     dest: "public",
@@ -19,4 +22,4 @@ nextPWA({
     skipWaiting: true,
   });
 
-export default nextConfig;
+export default withPWA(nextConfig);
