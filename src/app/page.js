@@ -2,7 +2,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import Button from "@mui/material/Button";
 import PwaModal from './Components/PwaModal.js'
-import darkmode from "./Darkmode.js";
+// import darkmode from "./Darkmode.js";
 // import Darkmode from "./Darkmode.js";
 //set title to "Home"
 export const metadata = {
