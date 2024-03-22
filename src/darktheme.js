@@ -11,19 +11,6 @@ const roboto = Roboto({
 });
 
 var themeMode = "dark"
-localStorage.setItem('theme', themeMode);
-
-//addeventlistener for theme change from localstorage
-window.addEventListener('storage', () => {
-  const themeMode = localStorage.getItem('theme');
-  console.log(themeMode);
-  theme.palette.mode = themeMode;
-});
-
-
-export function HandleThemeChange(props) {
-  
-}
 
 
 const darktheme = createTheme({

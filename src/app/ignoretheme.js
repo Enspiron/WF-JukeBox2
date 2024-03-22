@@ -10,14 +10,6 @@ const roboto = Roboto({
   display: 'swap',
 });
 
-// localStorage.setItem('theme', themeMode);
-
-//addeventlistener for theme change from localstorage
-// window.addEventListener('storage', () => {
-//   const themeMode = localStorage.getItem('theme');
-//   theme.palette.mode = themeMode;
-// });
-
 
 const theme = createTheme({
   palette: {
