@@ -25,7 +25,7 @@ export const metadata = {
 //when localstorage changes for "theme" key, this event listener will be called
 
 function CheckTheme() {
-  return darktheme
+  return theme
 }
 
 
