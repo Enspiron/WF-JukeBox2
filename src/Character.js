@@ -84,7 +84,7 @@ export default class Character{
     
 
     constructor(DevNicknames) {
-        console.log("Working")
+        // console.log("Working")
         Characters.chars.filter((char) => {
             if (char.DevNicknames === DevNicknames) {
                 this.Unit = char;

@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Box, Button, Divider, Typography, ToggleButton, ToggleButtonGroup, Dialog } from '@mui/material';
 
+import Switch from '@mui/material/Switch';
+
+import Image from 'next/image';
+
 import OneStar from '../unit-songs/rarity/star1.png';
 import TwoStar from '../unit-songs/rarity/star2.png';
 import ThreeStar from '../unit-songs/rarity/star3.png';
@@ -13,8 +17,42 @@ import Wind from '../unit-songs/elements/element_green.png';
 import Thunder from '../unit-songs/elements/element_yellow.png';
 import Light from '../unit-songs/elements/element_white.png';
 import Dark from '../unit-songs/elements/element_black.png';
+import styled from '@mui/material/styles/styled';
 
-import Image from 'next/image';
+const AntSwitch = styled(Switch)(({ theme }) => ({
+    padding: 8,
+    '& .MuiSwitch-track': {
+      borderRadius: 22 / 2,
+      '&::before, &::after': {
+        content: '""',
+        position: 'absolute',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        width: 16,
+        height: 16,
+      },
+      '&::before': {
+        backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
+          theme.palette.getContrastText(theme.palette.primary.main),
+        )}" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/></svg>')`,
+        left: 12,
+      },
+      '&::after': {
+        backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
+          theme.palette.getContrastText(theme.palette.primary.main),
+        )}" d="M19,13H5V11H19V13Z" /></svg>')`,
+        right: 12,
+      },
+    },
+    '& .MuiSwitch-thumb': {
+      boxShadow: 'none',
+      width: 16,
+      height: 16,
+      margin: 2,
+    },
+  }));
+
+const originalData = require('../unit-songs/characters.json').chars;
 
 const FilterModal = (props) => {
     const Rarities = [
@@ -23,8 +61,8 @@ const FilterModal = (props) => {
         { id: 3, image: ThreeStar },
         { id: 4, image: FourStar },
         { id: 5, image: FiveStar }
-    ]
-    
+    ];
+
     const Elements = [
         { id: 'fire', image: Fire },
         { id: 'water', image: Water },
@@ -32,25 +70,31 @@ const FilterModal = (props) => {
         { id: 'thunder', image: Thunder },
         { id: 'light', image: Light },
         { id: 'dark', image: Dark }
-    ]
+    ];
+
+    const [onlyWithSongs, setOnlyWithSongs] = useState(false);
+
     const [open, setOpen] = useState(false);
     const [selectedAttributes, setSelectedAttributes] = useState([]);
     const [selectedRarity, setSelectedRarity] = useState([]);
 
-    const Attributes = ['fire', 'water', 'wind', 'thunder', 'light', 'dark']
-    const Rarity = [1, 2, 3, 4, 5]
-    const Race = ["Aquatic", "Beast", "Demom", "Dragon", "Human", "Mecha", "Plant", "Sprite", "Undead", "Youkai"]
-    const Role = ["Bow", "Sword", "Special", "Fist", "Support"]
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
-    const handleOpen = () => {
-        setOpen(true);
-    };
+    const handleFilter = (event, newFilter, setFilter) => {
+        const updatedFilter = Array.isArray(newFilter) ? [...newFilter] : [newFilter];
+        setFilter(updatedFilter);
 
-    const handleClose = () => {
-        setOpen(false);
+        let tempFilter = [...props.filter];
+        const typeOfFilter = isArrayValid(updatedFilter);
+        tempFilter = filterObjects(tempFilter, typeOfFilter, updatedFilter);
+        props.setFilter(tempFilter);
     };
 
     function isArrayValid(array) {
+        const Attributes = ['fire', 'water', 'wind', 'thunder', 'light', 'dark'];
+        const Rarity = [1, 2, 3, 4, 5];
+
         const allAttributesLowerCase = Attributes.map(attribute => attribute.toLowerCase());
         const allRarityString = Rarity.map(rarity => rarity.toString());
         
@@ -79,7 +123,25 @@ const FilterModal = (props) => {
         }
     }
 
+    React.useEffect(() => {
+        let tempFilter = props.filter;
+        if (onlyWithSongs) {
+            console.log("Filtering only with songs");
+            console.log(tempFilter.filter(obj => obj.songs))
+            tempFilter = tempFilter.filter(obj => obj.songs);
+        }else {
+            tempFilter = originalData;
+        }
+
+
+        props.setFilter(tempFilter);
+    }, [onlyWithSongs]);
+
     function filterObjects(array, key, values) {
+        if (values.length === 0) {
+            return originalData;
+        }
+
         return array.filter(obj => {
             if (key === "Attribute") {
                 return values.includes(obj.Attribute.toLowerCase());
@@ -91,46 +153,20 @@ const FilterModal = (props) => {
         });
     }
 
-    const handleFilter = (event, newFilter, setFilter) => {
-        // Merge the new selected values with the existing selected values
-        const updatedFilter = Array.isArray(newFilter) ? [...newFilter] : [newFilter];
-        setFilter(updatedFilter);
-    
-        console.log("Currently filtering Attributes: ", selectedAttributes, "Rarity: ", selectedRarity);        
-        
-        let tempFilter = [...props.filter]; // Make a shallow copy to avoid mutating props directly
-        // Use the filterObjects function to filter
-        // First, check if newFilter is rarity or attribute
-        const typeOfFilter = isArrayValid(updatedFilter);
-        tempFilter = filterObjects(tempFilter, typeOfFilter, updatedFilter);
-    
-        props.setFilter(tempFilter);
-    
-        console.log("TempFilter", tempFilter);
-    };
-    
-    
-    
-    
-    
-
-    const style = {
-
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
-        boxShadow: 24,
-        p: 4,
-        alignItems: 'center',
-        justifyContent: 'center',
-    };
-
     return (
         <div>
-            <Button onClick={handleOpen}>Filter</Button>
+            <Button onClick={handleOpen} variant="outlined">Filter</Button>
             <Dialog open={open} onClose={handleClose}>
-                <Box
-                    sx={style}
-                >
+                <Box sx={{ bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4, alignItems: 'center', justifyContent: 'center' }}>
+                    <Divider>
+                        <Typography>Show Only With Songs?</Typography>
+                    </Divider>
+                    <AntSwitch
+                        checked={onlyWithSongs}
+                        onChange={() => setOnlyWithSongs(!onlyWithSongs)}
+                        inputProps={{ 'aria-label': 'controlled' }}
+
+                    />
                     <Divider>
                         <Typography>Attributes</Typography>
                     </Divider>
@@ -138,20 +174,12 @@ const FilterModal = (props) => {
                         value={selectedAttributes}
                         onChange={(event, newFilter) => handleFilter(event, newFilter, setSelectedAttributes)}
                         aria-label="text attributes"
-                        multiple // Enable multiple selections
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                        }}
+                        multiple
+                        sx={{ display: 'flex', justifyContent: 'center' }}
                     >
                         {Elements.map((element, index) => (
                             <ToggleButton key={index} value={element.id}>
-                                <Image src={element.image} alt={element.id} 
-                                style={{
-                                width: '60%',
-                                height: 'auto'
-                            }}
-                                />
+                                <Image src={element.image} alt={element.id} style={{ width: '60%', height: 'auto' }} />
                             </ToggleButton>
                         ))}
                     </ToggleButtonGroup>
@@ -163,32 +191,19 @@ const FilterModal = (props) => {
                         value={selectedRarity}
                         onChange={(event, newFilter) => handleFilter(event, newFilter, setSelectedRarity)}
                         aria-label="text rarity"
-                        multiple // Enable multiple selections
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                        }}
+                        multiple
+                        sx={{ display: 'flex', justifyContent: 'center' }}
                     >
-
-
                         {Rarities.map((rarity, index) => (
-                            <ToggleButton key={index} value={rarity.id}
->
-                                <Image src={rarity.image} alt={`star-${rarity.id}`} 
-                                style={{
-                                    width: '100%',
-                                    height: 'auto',
-                                }}
-                                />
+                            <ToggleButton key={index} value={rarity.id}>
+                                <Image src={rarity.image} alt={`star-${rarity.id}`} style={{ width: '100%', height: 'auto' }} />
                             </ToggleButton>
                         ))}
                     </ToggleButtonGroup>
-                    {selectedAttributes.map((attribute, index) => (
-                        <Typography key={index}>{attribute}</Typography>
-                    ))}
                 </Box>
             </Dialog>
         </div>
     );
 };
+
 export default FilterModal;

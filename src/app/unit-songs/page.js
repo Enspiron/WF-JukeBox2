@@ -67,6 +67,7 @@ import Three from "./rarity/star3.png";
 import Two from "./rarity/star2.png";
 import One from "./rarity/star1.png";
 
+import CardActionArea from "@mui/material/CardActionArea";
 import FilterModal from '../Components/FilterModal.js'
 
 import { Popover, Typography } from "@mui/material";
@@ -294,6 +295,7 @@ export default function Home() {
               unit.changeUnit(clickedUnit);
             }}
           >
+            <CardActionArea>
             <img
               src={charFiltering.getCharIcon(char.DevNicknames)}
               // alt={char.DevNicknames}
@@ -301,9 +303,10 @@ export default function Home() {
               width={50}
               height={50}
               style={{
-                borderRadius: "80%",
+                // borderRadius: "80%",
               }}
             />
+            </CardActionArea>
             <Popover>
               <Typography>{char.ENName}</Typography>
             </Popover>
@@ -318,7 +321,7 @@ export default function Home() {
         <div>
           <Box>
             <Stack
-              style={{ margin: "5px" }}
+              style={{ margin: "5px", backgroundColor: "rgba(0,0,0,0.02)",}}
               spacing={0.5}
               {...(isDesktop
                 ? {
@@ -338,7 +341,7 @@ export default function Home() {
                 }}
               />
 
-              <Paper
+              {/* <Paper
                 elevation={0}
                 sx={{
                   display: "flex",
@@ -373,9 +376,9 @@ export default function Home() {
                     <Image src={Light} alt="Light" width={20} height={20} />
                   </ToggleButton>
                 </StyledToggleButtonGroup>
-              </Paper>
+              </Paper> */}
 
-              <Paper
+              {/* <Paper
                 elevation={0}
                 sx={{
                   display: "flex",
@@ -430,8 +433,8 @@ export default function Home() {
                     />
                   </ToggleButton>
                 </StyledToggleButtonGroup>
-              </Paper>
-
+              </Paper> */}
+              <FilterModal filter={filter} setFilter={setFilter} />
               <Button
                 onClick={() => {
                   setAttributes(() => []);
@@ -441,10 +444,11 @@ export default function Home() {
                 }}
                 fullWidth={isDesktop ? false : true}
                 variant="outlined"
-                style={{ marginTop: "15px" }}
+                style={{ marginBottom: "auto", marginTop: "auto"}}
               >
                 Reset Filter
               </Button>
+              
             </Stack>
 
             <div>
@@ -460,7 +464,7 @@ export default function Home() {
               
             }}
           >
-            <FilterModal filter={filter} setFilter={setFilter} />
+            
 
             <Grid
               container
