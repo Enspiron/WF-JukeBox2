@@ -29,6 +29,7 @@ function BossList(props) {
             style={{
                 justifyContent: "center",
                 alignItems: "center",
+                width: "100%",
                 
             }}
             >

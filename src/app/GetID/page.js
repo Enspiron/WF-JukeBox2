@@ -1,5 +1,6 @@
 "use client";
 const characters = require('./character.json');
+const characterlist = require('./characters.json');
 import * as React from 'react';
 import { Accordion, AccordionActions, AccordionSummary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';

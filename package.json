@@ -2,6 +2,7 @@
   "name": "wfjukebox_nextjs",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8000",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -15,12 +16,21 @@
     "@mui/material": "^5.15.11",
     "@mui/material-next": "^6.0.0-alpha.124",
     "@mui/material-nextjs": "^5.15.11",
+    "axios": "^1.7.2",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "fastify": "^4.28.1",
+    "http": "^0.0.1-security",
+    "http-proxy-middleware": "^3.0.0",
+    "net": "^1.0.2",
     "next": "14.1.0",
     "next-pwa": "^5.6.0",
+    "nodemon": "^3.1.4",
     "plyr": "^3.7.8",
     "plyr-react": "^5.3.0",
     "react": "^18",
     "react-dom": "^18",
+    "swr": "^2.2.5",
     "use-sound": "^4.0.1"
   }
 }
