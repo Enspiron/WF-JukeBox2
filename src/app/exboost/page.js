@@ -36,6 +36,34 @@ function ListOfEXboosts() {
     )
 }
 
+function ListOfStatus() {
+    return(
+        <div style={{
+            // margin: "30px",
+            padding: "30px",
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+        }}>
+            {Object.keys(ex_status).map(key => {
+                if(ex_status.hasOwnProperty(key)) {
+                    return (
+                        <Accordion>
+                            <AccordionSummary>
+                                {ex_status[key][0]}
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                {key}
+                            </AccordionDetails>
+                        </Accordion>
+                    );
+                }
+            })}
+        </div>
+    )
+
+}
+
 export default function Home() {
 
     return(

@@ -86,7 +86,7 @@ function Characters(props) {
             }}>
                 {/* {props.devnickname} */}
 
-                <UnitEditModal devnickname={props.devnickname} ownedunits={CheckOwnedCharacters(props.list)}/>
+                <UnitEditModal devnickname={props.devnickname} ownedunits={CheckOwnedCharacters()}/>
 
             </div>
         )

@@ -7,6 +7,8 @@ import StyledRating from '@mui/material/Rating';
 import styled from '@mui/material/styles/styled';
 import Grid from '@mui/material/Grid';
 
+import exBoostConverting from './exBoostConverting.js';
+
 function UnitEditModal(props) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -24,14 +26,17 @@ function UnitEditModal(props) {
 
     const owned_chars = props.ownedunits;
     const isUnitOwned = () => {
+        // console.log("checking if owned units is correct, ", props.ownedunits);
         for(let key in owned_chars) {
+            // console.log("checking owned unit ", key);
             if(key === props.devnickname) {
+                // console.log("owned", key, props.devnickname);
                 return true;
-            } else {
-                return false;
             }
         }
+        return false; // Move this line outside of the for loop
     }
+    
 
     const [isOwned, setOwned] = useState(isUnitOwned());
 
@@ -59,6 +64,14 @@ function UnitEditModal(props) {
     //   }
 
     // console.log(props.devnickname, isUnitOwned());
+
+    const exboost = new exBoostConverting();
+    // console.log(exboost.searchEXBoostByDevName("skilldamage_self"))
+    // console.log(exboost.getEXBoostID("skilldamage_self", 5))
+    // console.log(exboost.buildEXBoost(5, "skilldamage_self", "feverpoint_self", 3))
+    // console.log(exboost.decodeEXBoost([10, 35]))
+
+    
 
     return(
         <div

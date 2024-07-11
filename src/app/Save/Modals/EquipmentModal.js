@@ -6,6 +6,9 @@ import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import StyledRating from '@mui/material/Rating';
 import styled from '@mui/material/styles/styled';
 
+import EquipLevel from '../Edits/EquipLevel';
+const equipments = require('../equipment.json');
+
 //https://eliya-bot.herokuapp.com/img/assets/item/equipment/{props.devnickname}.png
 
 function EquipmentModal(props) {
@@ -17,11 +20,40 @@ function EquipmentModal(props) {
         for(let key in props.ownedequipment) {
             if(key === props.devnickname) {
                 return true;
-            } else {
-                return false;
+            }
+        }
+        return false; // Move this line outside of the for loop
+    }
+
+    const getEquipmentByID = (id) => {
+        for(let key in equipments) {
+            if (key == id) {
+                return equipments[key][0];
             }
         }
     }
+
+    const getEquipByDevName = (devname) => {
+        for(let key in equipments) {
+            if (equipments[key][0] == devname) {
+                return key;
+            }
+        }
+    }
+
+    function getSelectedEquipmentData() {
+        const user_equip = props.fileContent;
+        for(let id in user_equip) {
+            if (getEquipmentByID(id) == props.devnickname) {
+                return user_equip[id];
+            }
+        }
+
+        return false;
+        // const selected_equipment = user_equip[props.devnickname];
+        // return selected_equipment;
+    }
+    
 
 
     return(
@@ -43,6 +75,8 @@ function EquipmentModal(props) {
                     }}
                     >
                     {props.devnickname}
+                    {JSON.stringify(getSelectedEquipmentData())}
+                    <EquipLevel level={getSelectedEquipmentData()["level"]-1} />
 
 
                     </Box>

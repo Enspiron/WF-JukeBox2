@@ -2,8 +2,16 @@ import React from 'react';
 import EquipmentModal from '../Modals/EquipmentModal.js';
 
 const equipment_id = require('../equipment.json');
+import EquipLevel from './EquipLevel.js';
 
 function Equipment(props) {
+
+    // "3020006": {
+    //     "level": 5,
+    //     "enhancement_level": 0,
+    //     "protection": false,
+    //     "stack": 2
+    //   },
     
     const MakeEquipmentList = ()  =>{
         const equips = {};
@@ -47,6 +55,8 @@ function Equipment(props) {
         list.push({devnickname: key, id: EquipmentList[key]});
     }
 
+    const equip_lsit = props.fileContent["user_equipment_list"];
+
     const Equipment = (props) => {
         return(
             <div style={{
@@ -56,7 +66,7 @@ function Equipment(props) {
                 borderRadius: "5px",
                 width: 'fit-content'
             }}>
-                <EquipmentModal devnickname={props.devnickname} ownedequipment={CheckOwnedEquipment()}/>
+                <EquipmentModal devnickname={props.devnickname} ownedequipment={CheckOwnedEquipment()} equips={MakeEquipmentList()} setFileContent={props.setFileContent} fileContent={equip_lsit}/>
             </div>
         )
     }

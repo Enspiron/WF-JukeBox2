@@ -29,7 +29,7 @@ import Image from 'next/image';
 
 const convert_exp = require('./convert_exp.js');
 
-const Dummy = require('./Enspiron Save.json');
+const Dummy = require('./Dummy_Save.json');
 
 import {Button, FormGroup, TextField, withStyles} from '@mui/material';
 import { Check } from '@mui/icons-material';
@@ -41,6 +41,7 @@ const equipment_id = require('./equipment.json');
 
 import UnitEditModal from './Modals/UnitEditModal.js';
 import EquipmentModal from './Modals/EquipmentModal.js';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import Equipment from './Edits/Equipment.js';
 import Characters from './Edits/Characters.js';
@@ -127,11 +128,11 @@ export default function FileUploadButton() {
     const [type, setType] = React.useState('data');
     const [settings, setSettings] = React.useState([]);
 
-    const debugMode = false;
+    const debugMode = true;
     if(debugMode) {
         // handleFileUpload({target: {files: [new File([JSON.stringify(Dummy)], 'Dummy_Save.json')] }}, setFileContent, setFileName);
         if (fileContent==null) {
-            handleFileUpload({target: {files: [new File([JSON.stringify(Dummy)], 'Enspiron Save.json')] }}, setFileContent, setFileName);
+            handleFileUpload({target: {files: [new File([JSON.stringify(Dummy)], 'Dummy_Save.json')] }}, setFileContent, setFileName);
 
         }
 
@@ -140,9 +141,7 @@ export default function FileUploadButton() {
     const [keys, setKeys] = React.useState([]);
 
     const [expanded, setExpanded] = React.useState('panel1');
-    const handleChange = (panel) => (event, newExpanded) => {
-        setExpanded(newExpanded ? panel : false);
-      };
+   
 
       
       
@@ -446,6 +445,18 @@ export default function FileUploadButton() {
 
     // AddUnitToRoster(10)
 
+    const [loading, setLoading] = React.useState(false);
+
+    const handleAccordonChange = async (panel) => {
+        setLoading(true);
+      };
+
+      const handleChange = (panel) => (event, newExpanded) => {
+        setExpanded(newExpanded ? panel : false);
+        handleAccordonChange();
+        setLoading(false);
+      };
+
     return (
       
 
@@ -467,7 +478,7 @@ export default function FileUploadButton() {
                 tabIndex={-1}
                 startIcon={<CloudUploadIcon />}
             >
-                Upload file
+                Upload file 
                 <Input type="file" style={{ display: 'none' }} onChange={(e) => handleFileUpload(e, setFileContent, setFileName)} />
             </Button>
                 {fileContent && (
@@ -496,7 +507,7 @@ export default function FileUploadButton() {
                 <div>
 
         <div style={{margin: '10px'}}>           
-        <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}
+        <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} onClick={handleAccordonChange}
         transitionDuration="0"
         >
         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
@@ -556,13 +567,16 @@ export default function FileUploadButton() {
         <AccordionSummary aria-controls="panel2d-content" id="panel2d-header"
         transitionDuration="0"
         >
-          <Typography>Edit Characters</Typography>
+          <Typography>Edit Characters 
+                    {loading ? <CircularProgress size={20} /> : null}
+
+          </Typography>
 
 
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            <Characters userlist={fileContent}/>
+            <Characters userlist={fileContent} setFileContent={setFileContent}/>
 
           </Typography>
         </AccordionDetails>
@@ -573,7 +587,7 @@ export default function FileUploadButton() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            <Equipment fileContent={fileContent}/>
+            <Equipment fileContent={fileContent} setFileContent={setFileContent}/>
           </Typography>
         </AccordionDetails>
       </Accordion>

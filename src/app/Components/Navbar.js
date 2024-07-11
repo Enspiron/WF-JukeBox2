@@ -11,6 +11,8 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import Menu from '@mui/material/Menu';
 
 const pages = [
     { name: 'Home', href: '/' },
@@ -29,6 +31,10 @@ const Navbar = () => {
     const handleNavigation = (page) => {
         window.location.href = page.href;
     };
+
+    const setLocation = (location) => {
+        window.location.href = location;
+    }
 
     return (
         <React.Fragment>
@@ -74,6 +80,7 @@ const Navbar = () => {
                                     {page.name}
                                 </Button>
                             ))}
+
                         </Box>
                     </Toolbar>
                 </Container>
@@ -103,6 +110,8 @@ const Navbar = () => {
                             {page.name}
                         </MenuItem>
                     ))}
+
+
                 </Box>
             </Drawer>
         </React.Fragment>
