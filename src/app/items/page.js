@@ -67,14 +67,29 @@ export default function Home() {
                     >
                         <Typography>{category.name} : ID = {category.id}</Typography>
                     </AccordionSummary>
-                    <AccordionDetails>
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(10, 1fr)', gap: '0px' }}>
+                    <AccordionDetails
+                   
+                   style={{
+                    maxWidth: '100%', // Ensures the width doesn't exceed the screen width
+                    maxHeight: '400px', // Adjust the max height as needed
+                    overflowY: 'auto' // Enables vertical scrolling
+                }}
+                    >
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(20, 1fr)', gap: '0px' }}>
                             {GetAllItemsWithCategoryID(category.id).map((item) => (
                                 <div key={GetIDfromName(item[0])} style={{ textAlign: 'center' }}>
                                     <img 
-                                        src={`https://wfjukebox.b-cdn.net/${item[2]}.png`} 
-                                        alt={item[0]} 
-                                        style={{ width: '40px' }} 
+                       
+                                        src={`https://wfjukebox.b-cdn.net/big${item[2]}.png`} 
+                                        // alt={item[0]} 
+                                        style={{ 
+                                            height: '40px',
+                                            // width: '40px',
+                                            cursor: 'pointer', 
+                                            // border: '1px solid black',
+                                            // padding: '5px',
+
+                                        }} 
                                         onClick={() => handleClickOpen(item)}
                                     />
                                     {/* <Typography>{item[0]}</Typography> */}
@@ -100,13 +115,19 @@ export default function Home() {
                 {selectedItem && (
                     <>
                         <img 
-                            src={`https://wfjukebox.b-cdn.net/${selectedItem[2]}.png`} 
+                            src={`https://wfjukebox.b-cdn.net/big${selectedItem[2]}.png`} 
                             alt={selectedItem[0]} 
                             style={{ width: '100px' }} 
                             />
                         <Typography>Devname: {selectedItem[0]}</Typography>
                         <Typography>Name: {selectedItem[1]}</Typography>
-                        <Typography>Description: {selectedItem[4]}</Typography>
+                        <Typography>Directory: {selectedItem[2]}</Typography>
+                        <Typography
+                        style={{
+                            backgroundColor: 'silver',
+                            padding: '5px',
+                        }}
+                        >{selectedItem[4]}</Typography>
                     </>
                 )}
             </div>
