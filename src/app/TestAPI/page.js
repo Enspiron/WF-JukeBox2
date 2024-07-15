@@ -77,3 +77,10 @@
 //         </div>
 //     )
 // }
+export default function Home() {
+    return(
+        <div>
+            <h1>API Testing</h1>
+        </div>
+    )
+}
