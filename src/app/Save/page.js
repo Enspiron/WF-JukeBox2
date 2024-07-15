@@ -7,11 +7,6 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Input from '@mui/material/Input';
 import DownloadIcon from '@mui/icons-material/Download';
 
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
@@ -20,22 +15,16 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 // import CloseIcon from '@mui/icons-material/Close';
 import Slider from '@mui/material/Slider';
-import MuiInput from '@mui/material/Input';
-import Image from 'next/image';
 
 const convert_exp = require('./convert_exp.js');
 
 const Dummy = require('./Dummy_Save.json');
 
 import {Button, FormGroup, TextField, withStyles} from '@mui/material';
-import { Check } from '@mui/icons-material';
-import Backdrop from '@mui/material/Backdrop';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
+
 const character_id = require('./character.json');
 const equipment_id = require('./equipment.json');
 
