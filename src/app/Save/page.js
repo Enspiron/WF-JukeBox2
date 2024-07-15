@@ -309,10 +309,10 @@ export default function FileUploadButton() {
 
     }
 
-    if(fileContent != null) {
-        // CheckOwnedCharacters();
-        console.log("owned characters: ", CheckOwnedCharacters());
-    }
+    // if(fileContent != null) {
+    //     // CheckOwnedCharacters();
+    //     // console.log("owned characters: ", CheckOwnedCharacters());
+    // }
 
     function CheckOwnedEquipment() {
         //loop through fileContent["user_character_list"]

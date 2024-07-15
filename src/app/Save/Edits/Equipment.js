@@ -56,6 +56,10 @@ function Equipment(props) {
     }
 
     const equip_lsit = props.fileContent["user_equipment_list"];
+    // console.log(props.setFileContent)
+    const fileContent = props.fileContent;
+
+    const setFileContent = props.setFileContent;
 
     const Equipment = (props) => {
         return(
@@ -66,7 +70,7 @@ function Equipment(props) {
                 borderRadius: "5px",
                 width: 'fit-content'
             }}>
-                <EquipmentModal devnickname={props.devnickname} ownedequipment={CheckOwnedEquipment()} equips={MakeEquipmentList()} setFileContent={props.setFileContent} fileContent={equip_lsit}/>
+                <EquipmentModal devnickname={props.devnickname} ownedequipment={CheckOwnedEquipment()} equips={MakeEquipmentList()} setFileContent={setFileContent} fileContent={fileContent}/>
             </div>
         )
     }
