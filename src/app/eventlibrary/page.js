@@ -29,6 +29,8 @@ const rush_event = require('./event/rush_event.json')
 const story_event = require('./event/story_event.json')
 const world_story_event = require('./event/world_story_event.json')
 
+const gacha = require('./gacha.json')
+
 
 function daily_challenge(json) {
     let list = [];
@@ -176,6 +178,23 @@ function worldStoryEvent(json) {
     return list;
 }
 
+function gachaEvent(json) {
+    let list = [];
+    for (let key in json) {
+        // console.log(json[key]);
+
+        list.push({
+            "event_id": json[key][0][1],
+            "event_name": json[key][0][1],
+            "event_image": json[key][0][3],
+            "event_description": json[key][5],
+            "event_date": json[key][0][29],
+        });
+    }
+
+    return list;
+}
+
 function createData(event_id, event_name, event_image, event_description, event_date) {
     return { event_id, event_name, event_image, event_description, event_date };
 }
@@ -247,6 +266,18 @@ export default function Home() {
                     <MakeTable json={daily_challenge(daily_challenge_point)} />
                 </AccordionDetails>
             </Accordion> */}
+            <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1bh-content"
+                    id="panel1bh-header"
+                >
+                    <Typography>Gacha Banner Dates</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <MakeTable json={gachaEvent(gacha)} />
+                </AccordionDetails>
+            </Accordion>
             <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
