@@ -9,12 +9,12 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 
-const exboosts = require('../Save/Modals/ex_boost.json');
-const exstatus = require('../Save/Modals/ex_status.json');
-import exBoostConverting from '../Save/Modals/exBoostConverting';
+const exboosts = require('./ex_boost.json');
+const exstatus = require('./ex_status.json');
+import exBoostConverting from './exBoostConverting';
 import { ExitToApp } from '@mui/icons-material';
 
-import EquipLevel from '../Save/Edits/EquipLevel';
+// import EquipLevel from '../Save/Edits/EquipLevel';
 
 const Rarities = [
     { devname: "_r5", rarity: 5, index: 0 },
