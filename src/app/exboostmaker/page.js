@@ -220,7 +220,7 @@ function App() {
                 EX Boost Built:
                 <pre style={{ padding: "10px", backgroundColor: "#f4f4f4", borderRadius: "5px", margin: "10px" }}>
                     {console.log(exboost.buildEXBoost(exStatus, slotA, slotB, exStatus))}
-                    {JSON.stringify(exboost.buildEXBoostFromForm(currentBoost))}
+                    {JSON.stringify(exboost.buildEXBoostFromForm(currentBoost), null, 2)}
 
                 </pre>
             </div>
