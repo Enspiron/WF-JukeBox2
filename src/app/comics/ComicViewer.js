@@ -18,6 +18,10 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import latestNew from './comic_latest_new.png';
 
+import Dialog from '@mui/material/Dialog';
+import IconButton from '@mui/material/IconButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 function ComicThumbnail(props) {
     const { episode, isMobile, setEpisode, modal } = props;
@@ -76,6 +80,10 @@ export default function ComicViewer() {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const [dialog, setDialog] = useState(false);
+    const handleDialog = () => setDialog(true);
+    const closeDialog = () => setDialog(false);
   
     const [isMobile, setIsMobile] = useState(false);
   
@@ -216,7 +224,6 @@ export default function ComicViewer() {
         )
     }
 
-
     const MobileGrid = (props) => {
         return(
             <Grid container 
@@ -246,7 +253,6 @@ export default function ComicViewer() {
         )
     }
 
-
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
         ...theme.typography.body2,
@@ -263,6 +269,7 @@ export default function ComicViewer() {
         )
     }
 
+    const languages = ['English', 'Japanese', 'Korean'];
 
     return (
         <Box
@@ -271,6 +278,39 @@ export default function ComicViewer() {
 
         }}
         >
+      <IconButton aria-label="Example"
+      style={{
+            "margin": "auto",
+            "position": "absolute",
+            left: '49%',
+      }}
+      >
+        <SettingsIcon onClick={handleDialog}/>
+      </IconButton>
+      <Dialog
+        open={dialog}
+        onClose={closeDialog}
+        style={{
+            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+            padding: '10px',
+
+        }}
+      >
+        <Box
+        style={{
+            padding: '10px',
+        }}
+        >
+            {/* dropdown of language options */}
+            <select>
+                {languages.map((lang) => (
+                    <option value={lang}>{lang}</option>
+                ))}
+            </select>
+
+        
+        </Box>
+      </Dialog>
             <Box
                 sx={{
                     display: 'flex',

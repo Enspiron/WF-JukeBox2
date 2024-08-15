@@ -32,8 +32,9 @@ export default function Home() {
         return response.json();
       })
       .then(data => {
-        // console.log(data); // Here you can work with the fetched JSON data
+        console.log(data); // Here you can work with the fetched JSON data
         json = data[0];
+
         // alert('Data loaded successfully!');
       })
       .catch(error => {

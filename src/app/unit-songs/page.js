@@ -67,6 +67,8 @@ import Three from "./rarity/star3.png";
 import Two from "./rarity/star2.png";
 import One from "./rarity/star1.png";
 
+// const Speech = require('./character_speech.json')
+
 import CardActionArea from "@mui/material/CardActionArea";
 import FilterModal from '../Components/FilterModal.js'
 
@@ -283,10 +285,18 @@ export default function Home() {
       return (
           <Item
             style={{
-              cursor: 'pointer',
-              padding: "1px 1px 0px 1px", // Remove bottom padding
-              height: "fit-content",
-              margin: "1px",
+              // cursor: 'pointer',
+              // padding: "1px 1px 0px 1px", // Remove bottom padding
+              // height: "fit-content",
+              // margin: "1px",
+              // display: 'flex',
+          width: '56px',
+          height: '56px',
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: '3px',
+          margin: '2px',
+          border: '3px solid #000',
               // border: "1px solid blue",
 
             }}                          
@@ -301,7 +311,7 @@ export default function Home() {
               // alt={char.DevNicknames}
               // style={{border: "1px solid red"}}
               width={50}
-              height={50}
+              // height={50}
               style={{
                 // borderRadius: "80%",
               }}
@@ -453,25 +463,24 @@ export default function Home() {
 
             <div>
             <Box
-            sx={{
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               width: '100%',
-              height: { xs: "420px", md: "85vh" },
-              overflowY: "auto",
-              alignItems: "stretch",
-              
-            }}
+              minHeight: '100vh',
+              padding: '30px 0',
+          }}
           >
             
 
             <Grid
-              container
-              columnSpacing={{ xs: 1, sm: 0, md: 1 }}
-              rowSpacing={{ xs: 0, sm: 0, md: 0 }}
-              spacing={2}
-              justifyContent="center"
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(18, 1fr)',
+                  boxSizing: 'border-box',
+                  justifyContent: 'center',
+              }}
             >
               <Filtering />
 
