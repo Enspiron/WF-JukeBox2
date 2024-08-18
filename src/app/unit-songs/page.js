@@ -325,6 +325,10 @@ export default function Home() {
     })
   }
 
+  //adjust columns based on screen width
+  //full size screen is 18 columns
+  const Columns = isDesktop ? 18 : 6;
+
   return (
     <div>
       {clickedUnit == null ? (
@@ -477,7 +481,7 @@ export default function Home() {
             <Grid
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(18, 1fr)',
+                  gridTemplateColumns: `repeat(${Columns}, 1fr)`,
                   boxSizing: 'border-box',
                   justifyContent: 'center',
               }}
